@@ -1,7 +1,6 @@
 FSAWs
 =====
 
-## Introduction
 This is the github page for the FSAWs package for R developed by Derek Ogle at Northland College.  This package contains functions for constructing and validating standard weight (Ws) equations for fish that were originally in the **[FSA](http://fishr.wordpress.com/fsa/)** package.  
 
 ## Installation
@@ -19,7 +18,7 @@ Descriptions of recent changes can be found in the [News.md file](https://github
 Contact me with questions by sending a friendly e-mail to <dogle@northland.edu>.
 
 ## Usages
-The functions in this package have been used in the following publications:
+The functions in this package, when they were part of the **FSA** package, have been used in the following publications:
 
 * Ogle DH, Winfield IJ.  2009.  Ruffe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-85.
 * Sulun S, Baskurt S, Emiroglu O, Giannetto D, Tarkan AS, Agdamar S, Gaygusuz O,  Dorak Z, Aydin H, Dicek A.  2014.  Development of empirical standard weight equation for Pursak chub _Squalius pursakensis_, an endemic cyprinid of Northwest Anatolia.  Turkish Journal of Zoology.
