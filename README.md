@@ -1,7 +1,7 @@
 FSAWs
 =====
 
-This is the github page for the FSAWs package for R developed by Derek Ogle at Northland College.  This package contains functions for constructing and validating standard weight (Ws) equations for fish that were originally in the **[FSA](http://fishr.wordpress.com/fsa/)** package.  
+This is the github page for the FSAWs package for R developed by [Derek Ogle](http://droglenc.wordpress.com/) at [Northland College](http://www.northland.edu/).  This package contains functions for constructing and validating standard weight (Ws) equations for fish that were originally in the **[FSA](http://fishr.wordpress.com/fsa/)** package.  
 
 ## Installation
 This package can be installed from github to your R with the following code
