@@ -10,8 +10,6 @@ Depends:
 Imports:
     gplots,
     quantreg
-Suggests:
-    FSAmisc
 License: GPL (>= 2)
 URL: https://github.com/droglenc/FSAWs
 Encoding: UTF-8
