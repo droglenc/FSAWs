@@ -97,3 +97,23 @@ lencatOLD <- function(df,cl,startcat=0,w=1,breaks=NULL,right=FALSE,
   # Returns the new data.frame
   nd
 }
+
+
+#' @title Fitted model plots.
+#'
+#' @description A generic function for constructing a fitted model plot.
+#'
+#' @details Specifics described relative to specific object (e.g., see \code{\link{emp}}).
+#' 
+#' @param object An object (see details).
+#' @param \dots Other arguments to be passed to the plot functions.
+#'
+#' @return None. However, a fitted-line plot is produced.
+#' 
+#' @aliases fitPlot
+#
+#' @rdname fitPlot
+#' @export
+fitPlot <- function (object, ...) {
+  UseMethod("fitPlot")
+}

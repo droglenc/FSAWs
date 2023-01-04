@@ -80,11 +80,7 @@
 #' anova(emp.res.d)
 #' summary(emp.res.d)
 #' # Fitted model and residual plots
-#' FSAmisc::fitPlot(emp.res.d$Ws)
-#' FSAmisc::residPlot(emp.res.d$Ws)
-#' # Fitted model and residual plots -- ALTERNATIVE (so no FSAmisc)
-#' plot(emp.res.d$Ws$model$logmidpt,emp.res.d$Ws$model$logwq,pch=19)
-#' lines(emp.res.d$Ws$model$logmidpt,emp.res.d$Ws$fitted.values,col="red",lwd=2)
+#' fitPlot(emp.res.d)
 #' plot(emp.res.d$Ws$residuals~emp.res.d$Ws$fitted.values,pch=19)
 #' abline(h=0,lty=3)
 #' # Sample sizes
@@ -105,7 +101,7 @@
 #' emp.v.q <- wsValidate(emp.res.d,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
 #'   type="EmpQ",weighted=TRUE)
 #' anova(emp.v.q)
-#' FSAmisc::fitPlot(emp.v.q$lm.v)
+#' fitPlot(emp.v.q)
 #' 
 #' 
 #' ## Fit the RLP model
@@ -113,8 +109,9 @@
 #' # RLP model results
 #' summary(rlp.res.d)
 #' # Fitted model and residual plot
-#' FSAmisc::fitPlot(rlp.res.d$Ws)
-#' FSAmisc::residPlot(rlp.res.d$Ws)
+#' fitPlot(rlp.res.d)
+#' plot(rlp.res.d$Ws$residuals~rlp.res.d$Ws$fitted.values,pch=19)
+#' abline(h=0,lty=3)
 #' # Show rlp model relative to all regression lines
 #' plot(rlp.res.d)
 #' 
@@ -129,7 +126,7 @@
 #' rlp.v.q <- wsValidate(rlp.res.d,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
 #'   type="EmpQ",weighted=TRUE)
 #' anova(rlp.v.q)
-#' FSAmisc::fitPlot(rlp.v.q$lm.v)
+#' fitPlot(rlp.v.q)
 #' 
 #' 
 #' ## "Fit" the Froese model
@@ -148,6 +145,6 @@
 #' Froese.v.q <- wsValidate(Froese.res.d,rWs.v,"regrnum","tl","wt",min=60,max=190,
 #'   w=10,type="EmpQ",use.means=TRUE,weighted=TRUE)
 #' anova(Froese.v.q)
-#' FSAmisc::fitPlot(Froese.v.q$lm.v,ylab="Standarded Mean Mean Weight")
+#' fitPlot(Froese.v.q,ylab="Standarded Mean Mean Weight")
 #' 
 NULL

@@ -53,7 +53,7 @@ wsValidate(
   ...
 )
 
-fitPlot.empq(
+\method{fitPlot}{empq}(
   object,
   pch = 16,
   col.pt = "black",

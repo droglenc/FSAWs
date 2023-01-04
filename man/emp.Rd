@@ -48,7 +48,7 @@ emp(
   ...
 )
 
-fitPlot.emplm(
+\method{fitPlot}{emplm}(
   object,
   pch = 16,
   col.pt = "black",
@@ -61,7 +61,7 @@ fitPlot.emplm(
   ...
 )
 
-fitPlot.emprq(
+\method{fitPlot}{emprq}(
   object,
   pch = 16,
   col.pop = "rich",

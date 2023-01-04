@@ -5,8 +5,10 @@
 * Fixed line lengths and added `package::` where needed in `emp()`, `FroeseWs`, `rlp()`, `wsValidate()`, and `chooseColors()`.
 
 * `chooseColors()` and `paletteChoices()`: Removed `jet` option (so as not to require a package dependency).
-* `emp()`: Removed related `residPlot()` (use `FSAmisc::residPlot()` instead as shown in some examples).
-* `rlp()`: Removed related `residPlot()` (use `FSAmisc::residPlot()` instead as shown in some examples).
+* `emp()`: Removed related `residPlot()` (use `plot()` instead as shown in some examples).
+* `fitPlot()`: Added generic function so that `fitPlot.emplm()`, `fitPlot.empq()`, `fitPlot.emprq()`, and `fitPlot.rlp()` would all work without depending on another package (i.e., `FSAmisc`).
+* `residPlot()`: Removed (all examples show how to form with `plot()`).
+* `rlp()`: Removed related `residPlot()` (use `plot()` instead as shown in some examples).
 
 # FSAWs 0.0.1 2014
 * Started this package with functions from FSA v0.4.6 and FSAdata v0.1.5.

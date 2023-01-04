@@ -35,7 +35,7 @@ rlp(log.a, b, min, max, w = 10, qtype = 8, probs = 0.75, digits = NULL)
 
 \method{summary}{rlp}(object, ...)
 
-fitPlot.rlp(
+\method{fitPlot}{rlp}(
   object,
   pch = 16,
   col.pt = "black",
@@ -129,8 +129,9 @@ lmb.rlp <- rlp(LMBassWs$log.a,LMBassWs$b,155,815,qtype=6)
 coef(lmb.rlp)
 # compare to log.a=-5.379 and b=3.221
 plot(lmb.rlp)
-FSAmisc::fitPlot(lmb.rlp$Ws)
-FSAmisc::residPlot(lmb.rlp$Ws)
+fitPlot(lmb.rlp)
+plot(lmb.rlp$Ws$residuals~lmb.rlp$Ws$fitted.values,pch=19)
+abline(h=0,lty=3)
 
 }
 \references{

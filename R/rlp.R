@@ -64,8 +64,9 @@
 #' coef(lmb.rlp)
 #' # compare to log.a=-5.379 and b=3.221
 #' plot(lmb.rlp)
-#' FSAmisc::fitPlot(lmb.rlp$Ws)
-#' FSAmisc::residPlot(lmb.rlp$Ws)
+#' fitPlot(lmb.rlp)
+#' plot(lmb.rlp$Ws$residuals~lmb.rlp$Ws$fitted.values,pch=19)
+#' abline(h=0,lty=3)
 #' 
 #' @rdname rlp
 #' @export

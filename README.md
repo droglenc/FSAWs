@@ -11,15 +11,6 @@ if (!require('remotes')) install.packages('remotes'); require('remotes')
 remotes::install_github('droglenc/FSAWs')
 ```
 
-The example in the `RuffeWs` documentation relies on the `fitPlot()` and `residPlot()` functions that used to be in the **FSA** package but are now in the **FSAmisc** package. To follow that complete example you will also need to install the **FSAmisc** package from Github.
-
-```r
-if (!require('remotes')) install.packages('remotes'); require('remotes')
-remotes::install_github('droglenc/FSAmisc')
-```
-
-Note that in the `RuffeWs` there is some alternative code in the first example that shows how to avoid using `fitPlot()` and `residPlot()` so that you would not need the **FSAmisc** package.
-
 ## Contact
 Contact me with questions by sending a friendly e-mail to <DerekOgle51@gmail.com>.
 
