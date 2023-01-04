@@ -8,7 +8,7 @@
 #' 
 #' @return A vector of colors of length \code{num}.
 #' 
-#' @author Derek H. Ogle, \email{dogle@@northland.edu}
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
 #' 
 #' @seealso \code{\link{rich.colors}} in \pkg{gplots}, \code{\link{cm.colors}}, \code{\link{heat.colors}}, \code{\link{topo.colors}}, \code{\link{terrain.colors}}, \code{\link{rainbow}}, \code{\link{colorRampPalette}}, and \code{\link{colors}}.
 #' 
@@ -23,22 +23,20 @@
 #' pie(rep(1,n), col=chooseColors("rainbow",n))
 #' pie(rep(1,n), col=chooseColors("topo",n))
 #' pie(rep(1,n), col=chooseColors("gray",n))
-#' pie(rep(1,n), col=chooseColors("jet",n))
 #' 
 chooseColors <- function(pal=paletteChoices(),num,...) {
   pal <- match.arg(pal)
-  jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
-  grey.colors <- colorRampPalette(c("grey20","grey80"))
+  jet.colors <- grDevices::colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+  grey.colors <- grDevices::colorRampPalette(c("grey20","grey80"))
   switch(pal,
-    rich={clrs <- rich.colors(num,...)},
-    cm={clrs <- cm.colors(num,...)},
+    rich={clrs <- gplots::rich.colors(num,...)},
+    cm={clrs <- grDevices::cm.colors(num,...)},
     default={clrs <- 1:num},
-    gray=,grey={clrs <- grey.colors(num)},
-    heat={clrs <- heat.colors(num,...)},
-    jet={clrs <- jet.colors(num)},
-    rainbow={clrs <- rainbow(num,...)},
-    topo={clrs <- topo.colors(num,...)},
-    terrain={clrs <- terrain.colors(num,...)}
+    gray=,grey={clrs <- grDevices::grey.colors(num)},
+    heat={clrs <- grDevices::heat.colors(num,...)},
+    rainbow={clrs <- grDevices::rainbow(num,...)},
+    topo={clrs <- grDevices::topo.colors(num,...)},
+    terrain={clrs <- grDevices::terrain.colors(num,...)}
   )
   clrs
 }

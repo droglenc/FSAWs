@@ -10,8 +10,6 @@
 #' 
 #' If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category.  This will make it easier to identify populations that \dQuote{cross over} other populations.
 #' 
-#' @aliases emp coef.emp summary.emp predict.emp anova.emplm plot.emplm fitPlot.emplm residPlot.emplm fitPlot.emprq
-#' 
 #' @param df A data frame that contains the length-weight data for each population.
 #' @param pops A string or numeric that indicates which column in \code{df} contains the variable that identifies the different populations.
 #' @param len A string or numeric that indicates which column in \code{df} contains the variable with the length data.
@@ -49,11 +47,13 @@
 #'   \item \code{Ws} is the Ws regression model results.
 #' }
 #' 
-#' @author Derek H. Ogle, \email{dogle@@northland.edu}
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
 #' 
 #' @seealso \code{\link{rlp}}, \code{\link{FroeseWs}}, and \code{\link{wsValidate}}; and \code{quantile} in \pkg{stats}
 #' 
 #' @references Gerow, K.G., R.C. Anderson-Sprecher, and W.A. Hubert.  2005.  A new method to compute standard-weight equations that reduces length-related bias.  North American Journal of Fisheries Management 25:1288-1300.
+#' 
+#' @aliases emp coef.emp summary.emp predict.emp anova.emplm plot.emplm fitPlot.emplm residPlot.emplm fitPlot.emprq
 #' 
 #' @keywords manip hplot
 #' 
@@ -89,19 +89,20 @@
 #' coef(wae1rq)
 #' 
 #' @rdname emp
-#' @export emp
+#' @export
 emp <- function(df,pops,len,wt,min,max,w=10,n.cutoff=3,cutoff.tail=TRUE,qtype=8,
                 probs=0.75,method=c("lm","rq"),quadratic=TRUE) {
    fLCat <- n <- NULL  # attempting to get by bindings warning in RCMD CHECK
    method <- match.arg(method)
-  # create data frame with mean logW, midpoints, and n to be used for EmP method
+   # create data frame with mean logW, midpoints, and n to be used for EmP method
    df$logwt <- log10(df[,wt])
    # adds lwr bnd len cat to df -- not factor for midpoint correction next
    df <- lencatOLD(df,len,startcat=min-w/2,w=w,as.fact=FALSE)
    # converts lower bound of category to a midpoint value
    df$LCat <- df$LCat+w/2
    # finds n and mean for each popn and length category
-   df1 <- aggregate(as.formula(paste("logwt~",pops,"+LCat",sep="")),data=df,FUN=function(x) cbind(length(x),mean(x)))
+   df1 <- stats::aggregate(stats::as.formula(paste("logwt~",pops,"+LCat",sep="")),
+                           data=df,FUN=function(x) cbind(length(x),mean(x)))
    # puts results into a useful data frame ... a hack
    df1 <- data.frame(as.matrix(df1))
    names(df1)[3:4] <- c("n","mn.logW")
@@ -109,110 +110,111 @@ emp <- function(df,pops,len,wt,min,max,w=10,n.cutoff=3,cutoff.tail=TRUE,qtype=8,
    df1$fLCat <- factor(df1$LCat)
    # add log midpt for quantile regression method 
    df1$logmidpt <- log10(df1$LCat) 
-  # find table of populations in each length category, remove those lower than ncutoff considering cutoff.tail
-   p.n.tbl <- table(df1$fLCat)                      # number of population means in each length category
-   p.n.low <- which(p.n.tbl < n.cutoff)             # which length categories had n below or equal to n.cutoff
-   p.n.adeq <- which(p.n.tbl >= n.cutoff)           # which length categories had n above n.cutoff
-   if (cutoff.tail & length(p.n.low)>0) {           # if cutoff entire tail then find the tail
+   # find table of populations in each length category, remove those lower than
+   #   ncutoff considering cutoff.tail
+   # number of population means in each length category
+   p.n.tbl <- table(df1$fLCat)                      
+   # which length categories had n below or equal to n.cutoff
+   p.n.low <- which(p.n.tbl < n.cutoff)             
+   # which length categories had n above n.cutoff
+   p.n.adeq <- which(p.n.tbl >= n.cutoff)           
+   # if cutoff entire tail then find the tail
+   if (cutoff.tail & length(p.n.low)>0) {           
      p.n.low <- p.n.low[1]:p.n.low[length(p.n.low)]
      p.n.adeq <- p.n.adeq[1]:(p.n.low[1]-1)
    }
    names(p.n.tbl)[which(names(p.n.tbl) %in% names(p.n.tbl)[p.n.low])] <- paste(names(p.n.tbl)[p.n.low],"*",sep="")  # asterisk those not used
    # make new data frame with length categories deleted
-   df2 <- subset(df1,fLCat %in% names(p.n.tbl)[p.n.adeq])
-   df2 <- gdata::drop.levels(df2,reorder=FALSE)
+   df2 <- droplevels(subset(df1,fLCat %in% names(p.n.tbl)[p.n.adeq]))
 
-  # find the given quantile of mean logW in each length category
-   logWq <- tapply(df2$mn.logW,df2$fLCat,quantile,probs=probs,type=qtype)
-   regdf <- data.frame(midpt=as.numeric(names(logWq)),Wq=10^(logWq),logmidpt=log10(as.numeric(names(logWq))),logwq=logWq,n=p.n.tbl[names(logWq)])
+   # find the given quantile of mean logW in each length category
+   logWq <- tapply(df2$mn.logW,df2$fLCat,stats::quantile,probs=probs,type=qtype)
+   regdf <- data.frame(midpt=as.numeric(names(logWq)),
+                       Wq=10^(logWq),logmidpt=log10(as.numeric(names(logWq))),
+                       logwq=logWq,n=p.n.tbl[names(logWq)])
 
-  # fit the regression to define the Ws equation
-   if (method=="lm") Ws <- lm(logwq~logmidpt,data=regdf,weights=n)
-     else Ws <- rq(mn.logW~logmidpt,tau=probs,data=df1)
-   if (quadratic) Ws <- update(Ws,.~.+I(logmidpt^2)) 
+   # fit the regression to define the Ws equation
+   if (method=="lm") Ws <- stats::lm(logwq~logmidpt,data=regdf,weights=n)
+     else Ws <- quantreg::rq(mn.logW~logmidpt,tau=probs,data=df1)
+   if (quadratic) Ws <- stats::update(Ws,.~.+I(logmidpt^2)) 
 
   # return lots of parts
   ifelse(method=="lm",retdf <- regdf,retdf <- df1)
-  res <- list(pop.by.len=p.n.tbl,ind.by.len=with(df1,tapply(n,fLCat,sum,na.rm=TRUE)),sumdata=df2,regdata=retdf,quadratic=quadratic,probs=probs,Ws=Ws)
+  res <- list(pop.by.len=p.n.tbl,ind.by.len=with(df1,tapply(n,fLCat,sum,na.rm=TRUE)),
+              sumdata=df2,regdata=retdf,quadratic=quadratic,probs=probs,Ws=Ws)
   ifelse(method=="lm", class(res) <- c("emplm","emp"), class(res) <- c("emprq","emp"))
   res
 } 
 
 #' @rdname emp
-#' @method coef emp
-#' @S3method coef emp
+#' @export
 coef.emp <- function(object,...) {
-  coef(object$Ws,...)
+  stats::coef(object$Ws,...)
 }
 
 #' @rdname emp
-#' @method summary emp
-#' @S3method summary emp
+#' @export
 summary.emp <- function(object,...) {
   summary(object$Ws,...)
 }
 
 #' @rdname emp
-#' @method predict emp
-#' @S3method predict emp
+#' @export
 predict.emp <- function(object,...) {
-  predict(object$Ws,...)
+  stats::predict(object$Ws,...)
 }
 
 #' @rdname emp
-#' @method anova emplm
-#' @S3method anova emplm
+#' @export
 anova.emplm <- function(object,...) {
-  anova(object$Ws,...)
+  stats::anova(object$Ws,...)
 }
 
 #' @rdname emp
-#' @method plot emplm
-#' @S3method plot emplm
+#' @export
 plot.emplm <- function(x,pch=16,col.pop="rich",col.Ws="black",lwd.Ws=3,lty.Ws=1,
                        jitterX=TRUE,jitter.factor=3,...) {
-  old.par <- par(mar=c(3.5,3.5,1,1), mgp=c(2,0.75,0));   on.exit(par(old.par))
+  old.par <- graphics::par(mar=c(3.5,3.5,1,1), mgp=c(2,0.75,0)); on.exit(graphics::par(old.par))
   object <- x
   pops <- factor(unique(object$sumdata$regrnum))
   if (col.pop %in% paletteChoices()) col.pop <- chooseColors(col.pop,length(pops))
-  ifelse(jitterX,x <- jitter(object$sumdata$logmidpt,factor=jitter.factor),x <- object$sumdata$logmidpt) 
-  plot(object$sumdata$mn.logW~x,pch=pch,col=col.pop,xlab="log10(Length (mm))",ylab="mean log10(Weight (g))")
-  if (!object$quadratic) abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
+  ifelse(jitterX,x <- jitter(object$sumdata$logmidpt,factor=jitter.factor),
+         x <- object$sumdata$logmidpt) 
+  graphics::plot(object$sumdata$mn.logW~x,pch=pch,col=col.pop,
+                 xlab="log10(Length (mm))",ylab="mean log10(Weight (g))")
+  if (!object$quadratic) graphics::abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
     else {
-      x <- seq(min(object$regdata$logmidpt),max(object$regdata$logmidpt),length.out=500)
-      y <- predict(object$Ws,data.frame(logmidpt=x))
-      lines(y~x,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
+      x <- seq(min(object$regdata$logmidpt),max(object$regdata$logmidpt),
+               length.out=500)
+      y <- stats::predict(object$Ws,data.frame(logmidpt=x))
+      graphics::lines(y~x,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
     }
 }
 
 #' @rdname emp
-#' @method fitPlot emplm
-#' @S3method fitPlot emplm
+#' @export
 fitPlot.emplm <- function(object,pch=16,col.pt="black",col.Ws="red",lwd.Ws=3,lty.Ws=1,
                  xlab="log10(midpt Length)",
                  ylab=paste(100*object$probs,"Percentile of mean log10(Weight)"),
                  main="EMP Equation Fit",...) {
   ifelse("emplm" %in% class(object),df <- object$regdata, df <- object$rawdata)
-  plot(object$regdata$logwq~object$regdata$logmidpt,pch=pch,col=col.pt,xlab=xlab,ylab=ylab,main=main,...)
-  if (!object$quadratic) abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
+  graphics::plot(object$regdata$logwq~object$regdata$logmidpt,
+                 pch=pch,col=col.pt,xlab=xlab,ylab=ylab,main=main,...)
+  if (!object$quadratic) graphics::abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
     else {
-      x <- seq(min(object$regdata$logmidpt),max(object$regdata$logmidpt),length.out=500)
-      y <- predict(object$Ws,data.frame(logmidpt=x))
-      lines(y~x,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
+      x <- seq(min(object$regdata$logmidpt),max(object$regdata$logmidpt),
+               length.out=500)
+      y <- stats::predict(object$Ws,data.frame(logmidpt=x))
+      graphics::lines(y~x,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
     }
 }
 
 #' @rdname emp
-#' @method residPlot emplm
-#' @S3method residPlot emplm
-residPlot.emplm <- function(object,...) {
-  residPlot(object$Ws)
-}
-
-#' @rdname emp
-#' @method fitPlot emprq
-#' @S3method fitPlot emprq
-fitPlot.emprq <- function(object,pch=16,col.pop="rich",col.Ws="black",lwd.Ws=3,lty.Ws=1,
+#' @export
+fitPlot.emprq <- function(object,pch=16,col.pop="rich",
+                          col.Ws="black",lwd.Ws=3,lty.Ws=1,
                           jitterX=TRUE,jitter.factor=3,...) {
-  plot.emplm(object,pch=pch,col.pop=col.pop,col.Ws=col.Ws,lwd.Ws=lwd.Ws,lty.Ws=lty.Ws,jitterX=jitterX,jitter.factor=jitter.factor,...)
+  plot.emplm(object,pch=pch,col.pop=col.pop,
+             col.Ws=col.Ws,lwd.Ws=lwd.Ws,lty.Ws=lty.Ws,
+             jitterX=jitterX,jitter.factor=jitter.factor,...)
 }

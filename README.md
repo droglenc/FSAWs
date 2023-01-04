@@ -1,21 +1,27 @@
 FSAWs
 =====
 
-This is the github page for the FSAWs package for R developed by [Derek Ogle](http://droglenc.wordpress.com/) at [Northland College](http://www.northland.edu/). This package contains functions for constructing and validating standard weight (Ws) equations for fish that were originally in the **[FSA](http://fishr.wordpress.com/fsa/)** package. 
+The **FSAWs** package contains functions for constructing and validating standard weight (Ws) equations for fish.
 
 ## Installation
 This package can be installed from github to your R with the following code
 
 ```r
-if (!require('devtools')) install.packages('devtools'); require('devtools')
-devtools::install_github('FSA','droglenc')
-devtools::install_github('FSAWs','droglenc')
+if (!require('remotes')) install.packages('remotes'); require('remotes')
+remotes::install_github('droglenc/FSAWs')
 ```
 
-Descriptions of recent changes can be found in the [News.md file](https://github.com/droglenc/FSAWs/blob/master/NEWS.md)
+The example in the `RuffeWs` documentation relies on the `fitPlot()` and `residPlot()` functions that used to be in the **FSA** package but are now in the **FSAmisc** package. To follow that complete example you will also need to install the **FSAmisc** package from Github.
+
+```r
+if (!require('remotes')) install.packages('remotes'); require('remotes')
+remotes::install_github('droglenc/FSAmisc')
+```
+
+Note that in the `RuffeWs` there is some alternative code in the first example that shows how to avoid using `fitPlot()` and `residPlot()` so that you would not need the **FSAmisc** package.
 
 ## Contact
-Contact me with questions by sending a friendly e-mail to <dogle@northland.edu>.
+Contact me with questions by sending a friendly e-mail to <DerekOgle51@gmail.com>.
 
 ## Usages
 The functions in this package, when they were part of the **FSA** package, have been used in the following publications:

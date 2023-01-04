@@ -8,8 +8,6 @@
 #' 
 #' Types of quantile calculation methods are discussed in the details of \code{quantile}.
 #' 
-#' @aliases wsValidate print.willis summary.willis anova.empq coef.empq summary.empq predict.empq plot.empq fitPlot.empq
-#' 
 #' @param object An object of class \code{RLP} or \code{EMP} returned from calling \code{rlp()} or \code{emp()} in the main function and an object of class class \code{empq} or \code{willis} (saved from the \code{wsValidate}) in the generic functions.
 #' @param df A data frame that contains the length-weight data for each population.
 #' @param pops A string or numeric that indicates which column in \code{df} contains the variable that identifies the different populations.
@@ -53,7 +51,7 @@
 #'   \item \code{lm.v} is the EmpQ regression model results.
 #' }
 #' 
-#' @author Derek H. Ogle, \email{dogle@@northland.edu}
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
 #' 
 #' @seealso \code{\link{rlp}}, \code{\link{emp}}, and \code{\link{FroeseWs}}; and \code{quantile} in \pkg{stats}
 #' 
@@ -61,38 +59,46 @@
 #' 
 #' Willis, D.W., C.S. Guy, and B.R. Murphy.  1991.  Development and evaluation of the standard weight (Ws) equation for yellow perch.  North American Journal of Fisheries Management, 11:374-380.
 #' 
+#' @aliases wsValidate print.willis summary.willis anova.empq coef.empq summary.empq predict.empq plot.empq fitPlot.empq
+#' 
 #' @keywords manip
 #' 
 #' @examples
 #' ## See examples in rlp(), emp(), and FroeseWs()
 #' 
 #' @rdname wsValidate
-#' @export wsValidate
-wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"),n.cutoff=3,cutoff.tail=TRUE,qtype=8,probs=0.75,use.means=FALSE,quadratic=TRUE,weighted=FALSE,alpha=0.05) {
+#' @export
+wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"),
+                       n.cutoff=3,cutoff.tail=TRUE,qtype=8,probs=0.75,
+                       use.means=FALSE,quadratic=TRUE,weighted=FALSE,alpha=0.05) {
   ## Internal functions
   compute.Ws <- function(object,vals) {
     if (!("FroeseWs" %in% class(object))) {
       ndf <- data.frame(log10(vals))
       names(ndf) <- names(object$Ws$model)[2]
-      Ws <- 10^(predict(object,ndf))
+      Ws <- 10^(stats::predict(object,ndf))
     } else Ws <- object$gm.a*vals^object$mn.b
     Ws  
   }
   
-  EmpQ <- function(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,qtype,probs,quadratic,weighted) {
+  EmpQ <- function(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,
+                   qtype,probs,quadratic,weighted) {
     # adds lwr bnd len cat to df -- not factor for midpoint correction next
     df <- lencatOLD(df,len,startcat=min-w/2,w=w,as.fact=FALSE)
     # converts lower bound of category to a midpoint value
     df$LCat <- df$LCat+w/2
     # finds n and mean for each popn and length category
-    df1 <- aggregate(as.formula(paste(wt,"~",pops,"+LCat",sep="")),data=df,FUN=function(x) cbind(length(x),mean(x)))
+    df1 <- stats::aggregate(stats::as.formula(paste(wt,"~",pops,"+LCat",sep="")),
+                            data=df,FUN=function(x) cbind(length(x),mean(x)))
     # puts results into a useful data frame ... a hack
     df1 <- data.frame(as.matrix(df1))
     names(df1)[3:4] <- c("n","mn.W")
     # creates a factored version of LCat -- for summary tables
     df1$fLCat <- factor(df1$LCat)
-   # find table of populations in each length category, remove those lower than ncutoff considering cutoff.tail
-    p.n.tbl <- table(df1$fLCat)               # number of population means in each length category
+    # find table of populations in each length category, remove those lower than
+    #    ncutoff considering cutoff.tail
+    # number of population means in each length category
+    p.n.tbl <- table(df1$fLCat)               
     p.n.low <- which(p.n.tbl < n.cutoff)
     p.n.adeq <- which(p.n.tbl >= n.cutoff)
     if (cutoff.tail & length(p.n.low)>0) {
@@ -100,26 +106,31 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
       p.n.adeq <- p.n.adeq[1]:(p.n.low[1]-1)
     }
     names(p.n.tbl)[which(names(p.n.tbl) %in% names(p.n.tbl)[p.n.low])] <- paste(names(p.n.tbl)[p.n.low],"*",sep="")  # asterisk those not used
-    df2 <- subset(df1,fLCat %in% names(p.n.tbl)[p.n.adeq])                            # make new data frame with length categories deleted
-    df2 <- gdata::drop.levels(df2,reorder=FALSE)
-   # find the desired quantile (or mean) of mean W in each length category
+    # make new data frame with length categories deleted
+    df2 <- droplevels(subset(df1,fLCat %in% names(p.n.tbl)[p.n.adeq]))
+    # find the desired quantile (or mean) of mean W in each length category
     if (use.means) Wq <- tapply(df2$mn.W,df2$fLCat,mean)
-    else Wq <- tapply(df2$mn.W,df2$fLCat,quantile,probs=probs,type=qtype)
+    else Wq <- tapply(df2$mn.W,df2$fLCat,stats::quantile,probs=probs,type=qtype)
     regdf <- data.frame(midpt=as.numeric(names(Wq)),wq=Wq,n=p.n.tbl[names(Wq)])
-    regdf$Ws <- compute.Ws(object,regdf$midpt)                                        # add computed Ws & stndrdzd quantile (or mean) mean weight to df
+    # add computed Ws & stndrdzd quantile (or mean) mean weight to df
+    regdf$Ws <- compute.Ws(object,regdf$midpt)                                        
     regdf$Wr <- (regdf$wq/regdf$Ws)*100
-   # Add regression of standardized quartile (or mean) mean weight on midpoint
-    ifelse(weighted,lm.v <- lm(Wr~midpt,weights=n,data=regdf),lm.v <- lm(Wr~midpt,data=regdf)) 
-    if (quadratic) lm.v <- update(lm.v,.~.+I(midpt^2))
+    # Add regression of standardized quartile (or mean) mean weight on midpoint
+    ifelse(weighted,lm.v <- stats::lm(Wr~midpt,weights=n,data=regdf),
+           lm.v <- stats::lm(Wr~midpt,data=regdf)) 
+    if (quadratic) lm.v <- stats::update(lm.v,.~.+I(midpt^2))
    # return lots of parts
-    list(n.by.pop=p.n.tbl,lm.v=lm.v,regdata=regdf,quadratic=quadratic,weighted=weighted,probs=probs)
+    list(n.by.pop=p.n.tbl,lm.v=lm.v,regdata=regdf,
+         quadratic=quadratic,weighted=weighted,probs=probs)
   } ## end of internal EmpQ function
    
   Willis <- function(object,df,pops,len,wt,alpha) {
-   # modify database with standard weight and relative weight
-    df$Ws <- compute.Ws(object,df[,len])                                              # Add reg of standardized quartile (or mean) mean weight on midpoint
+    # modify database with standard weight and relative weight
+    # Add reg of standardized quartile (or mean) mean weight on midpoint
+    df$Ws <- compute.Ws(object,df[,len])                                              
     df$Wr <- (df[,wt]/df$Ws)*100
-   # loop through regressions of Wr on length by "fishery" keeping track of sign of significant relationships.  
+    # loop through regressions of Wr on length by "fishery" keeping track
+    #   of sign of significant relationships.  
     reg.nums <- sort(unique(df[,pops]))
     pop <- len.slope <- len.slope.p <- numeric(length(reg.nums))
     sig.slope <- logical(length(reg.nums))
@@ -127,29 +138,32 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
     for (i in 1:length(reg.nums)) {
       pop[i] <- reg.nums[i]
       df1 <- df[df[,pops]==reg.nums[i],]
-      lm1 <- lm(df1$Wr~df1[,len])
-      len.slope[i] <- coef(lm1)[2]
+      lm1 <- stats::lm(df1$Wr~df1[,len])
+      len.slope[i] <- stats::coef(lm1)[2]
       len.slope.p[i] <- summary(lm1)$coefficients[2,"Pr(>|t|)"]
     }
     sig.slope <- len.slope.p < alpha
     sign.slope[sig.slope] <- sign(len.slope[sig.slope])
     sign.slope <- factor(sign.slope,levels=c("-1","","1"))
-    res.ind <- data.frame(pop,slope=len.slope,p.value=len.slope.p,significant=sig.slope,sign=sign.slope)
-   # binomial test
+    res.ind <- data.frame(pop,slope=len.slope,p.value=len.slope.p,
+                          significant=sig.slope,sign=sign.slope)
+    # binomial test
     res.tbl <- table(sign.slope,exclude="")
     rownames(res.tbl) <- c("Negative","Positive")
-    res.test <- binom.test(res.tbl[1],sum(res.tbl))
-   # return results
+    res.test <- stats::binom.test(res.tbl[1],sum(res.tbl))
+    # return results
     list(res.ind=res.ind,res.tbl=res.tbl,res.test=res.test)
   }  ## end of internal Willis function 
   
- ## start of main function 
-  fLCat <- n <- NULL  # attempting to get by bindings warning in RCMD CHECK
+  ## start of main function
+  # attempting to get by bindings warning in RCMD CHECK
+  fLCat <- n <- NULL
   type <- match.arg(type)
- # modify database by limiting to lengths within modeling end points
+  # modify database by limiting to lengths within modeling end points
   df <- df[df[,len]>=min-w/2 & df[,len]<max+w/2,]
   if (type=="EmpQ") {
-    res <- EmpQ(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,qtype,probs,quadratic,weighted)
+    res <- EmpQ(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,
+                qtype,probs,quadratic,weighted)
     class(res) <- c("empq")
   } else {
     res <- Willis(object,df,pops,len,wt,alpha)
@@ -159,8 +173,7 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
 }
 
 #' @rdname wsValidate
-#' @method print willis
-#' @S3method print willis
+#' @export
 print.willis <- function(x,...) {
   cat("Individual Regression Results.\n")
   print(x$res.ind)
@@ -169,8 +182,7 @@ print.willis <- function(x,...) {
 }
 
 #' @rdname wsValidate
-#' @method summary willis
-#' @S3method summary willis
+#' @export
 summary.willis <- function(object,...) {
   cat("\nSummary Table of Significant Slopes.\n")
   print(object$res.tbl)
@@ -179,8 +191,7 @@ summary.willis <- function(object,...) {
 }
 
 #' @rdname wsValidate
-#' @method summary empq
-#' @S3method summary empq
+#' @export
 summary.empq <- function(object,...) {
   cat("\nNumber of Populations in Each Length Category.\n")
   print(object$n.by.pop)
@@ -189,42 +200,45 @@ summary.empq <- function(object,...) {
 }
 
 #' @rdname wsValidate
-#' @method anova empq
-#' @S3method anova empq
+#' @export
 anova.empq <- function(object,...) {
-  anova(object$lm.v,...)
+  stats::anova(object$lm.v,...)
 }
 
 #' @rdname wsValidate
-#' @method coef empq
-#' @S3method coef empq
+#' @export
 coef.empq <- function(object,...) {
-  coef(object$lm.v,...)
+  stats::coef(object$lm.v,...)
 }
 
 #' @rdname wsValidate
-#' @method predict empq
-#' @S3method predict empq
+#' @export
 predict.empq <- function(object,...) {
-  predict(object$lm.v,...)
+  stats::predict(object$lm.v,...)
 }
 
 #' @rdname wsValidate
-#' @method plot empq
-#' @S3method plot empq
-plot.empq <- function(x,pch=16,col.pt="black",xlab="Midpoint Length Category",ylab=paste("Standardized",100*x$probs,"Percentile Mean Weight"),...) {
-  plot(Wr~midpt,data=x$regdata,xlab=xlab,ylab=ylab,pch=pch,col=col.pt,...)
+#' @export
+plot.empq <- function(x,pch=16,col.pt="black",
+                      xlab="Midpoint Length Category",
+                      ylab=paste("Standardized",100*x$probs,"Percentile Mean Weight"),
+                      ...) {
+  graphics::plot(Wr~midpt,data=x$regdata,xlab=xlab,ylab=ylab,pch=pch,col=col.pt,...)
 }
 
 #' @rdname wsValidate
-#' @method fitPlot empq
-#' @S3method fitPlot empq
-fitPlot.empq <- function(object,pch=16,col.pt="black",col.mdl="red",lwd.mdl=3,lty.mdl=1,xlab="Midpoint Length Category",ylab=paste("Standardized",100*object$probs,"Percentile Mean Weight"),main="EmpQ Method",...) {
-  plot(object,pch=pch,col.pt=col.pt,xlab=xlab,ylab=ylab,...)
-  if (!object$quadratic) abline(object$lm.v,col=col.mdl,lwd=lwd.mdl,lty=lty.mdl)
+#' @export
+fitPlot.empq <- function(object,pch=16,col.pt="black",
+                         col.mdl="red",lwd.mdl=3,lty.mdl=1,
+                         xlab="Midpoint Length Category",
+                         ylab=paste("Standardized",100*object$probs,"Percentile Mean Weight"),
+                         main="EmpQ Method",...) {
+  graphics::plot(object,pch=pch,col.pt=col.pt,xlab=xlab,ylab=ylab,...)
+  if (!object$quadratic) 
+    graphics::abline(object$lm.v,col=col.mdl,lwd=lwd.mdl,lty=lty.mdl)
     else {
       x <- seq(min(object$regdata$midpt),max(object$regdata$midpt),length.out=500)
-      y <- predict(object$lm.v,data.frame(midpt=x))
-      lines(y~x,col=col.mdl,lwd=lwd.mdl,lty=lty.mdl)
+      y <- stats::predict(object$lm.v,data.frame(midpt=x))
+      graphics::lines(y~x,col=col.mdl,lwd=lwd.mdl,lty=lty.mdl)
     }
 }

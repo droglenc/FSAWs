@@ -29,9 +29,8 @@
 #' head(BluegillWs)
 #' 
 #' ## Recreate Murphy et al. (1990) results for bluegills
-#' # compare to log.a=-5.385 and b=3.318
-#' require(FSA)
 #' bg.rlp <- rlp(BluegillWs$log.a,BluegillWs$b,75,395,qtype=6)
 #' coef(bg.rlp)
+#' # compare to log.a=-5.385 and b=3.318
 #' 
 NULL

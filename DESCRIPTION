@@ -1,18 +1,18 @@
 Package: FSAWs
-Version: 0.0.1
-Title: Functions for constructing and validating standard weight (Ws) equations
-    for fish.
-Description: This package can be used to peform a variety of simple fish stock
-    assessment methods.  Detailed vignettes are available on the fishR website
-    listed below.
-Author: Derek H. Ogle <dogle@northland.edu>
-Maintainer: Derek H. Ogle <dogle@northland.edu>
+Version: 0.0.2
+Title: Construct and Validate Standard Weight (Ws) Equations for Fish
+Description: Construct and validate standard weight (Ws) equations for fish.
+Authors@R: person("Derek", "Ogle", email="DerekOgle51@gmail.com",
+                  role=c("aut","cre"))
+LazyData: true
 Depends:
     R (>= 3.0.0)
 Imports:
-    FSA,
-    gdata,
     gplots,
     quantreg
+Suggests:
+    FSAmisc
 License: GPL (>= 2)
-URL: http://fishr.wordpress.com/, https://github.com/droglenc/FSAWs
+URL: https://github.com/droglenc/FSAWs
+Encoding: UTF-8
+RoxygenNote: 7.2.3

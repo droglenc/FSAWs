@@ -33,11 +33,8 @@
 #' head(WalleyeWs)
 #' 
 #' ## Recreate Murphy et al. (1990) results for walleye
-#' # compare to log.a=-5.453 and b=3.180
-#' \dontrun{
-#' require(FSA)
 #' wae.rlp <- rlp(WalleyeWs$log.a,WalleyeWs$b,155,1045,qtype=6)
 #' coef(wae.rlp)
-#' }
+#' # compare to log.a=-5.453 and b=3.180
 #' 
 NULL

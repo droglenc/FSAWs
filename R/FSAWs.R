@@ -18,11 +18,6 @@
 #' Giannetto D, La Porta G, Maio G, Pizzul E, Turin P, Lorenzoni M. 2011. Proposed standard mass equations for European chub \emph{Leuciscus cephalus} in Italy. Journal of Fish Biology 78:1890-1899.
 #' 
 #' Giannetto D, PeDiCillo G. 2011. Proposed standard weight (Ws) equations for \emph{Telestes muticellus} (Bonaparte, 1837) in the Tiber River basin.  Cybium 35:141-147. 
-
-#' @importFrom FSA fitPlot residPlot
-#' @importFrom gdata drop.levels
-#' @importFrom gplots rich.colors
-#' @importFrom quantreg rq
 #' 
 #' @docType package
 #' @name FSAWs

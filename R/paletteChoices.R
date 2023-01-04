@@ -6,12 +6,12 @@
 #' 
 #' @return A single string with a palette name.
 #' 
-#' @author Derek H. Ogle, \email{dogle@@northland.edu}
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
 #' 
 #' @keywords misc
 #' 
 #' @export
 #' 
 paletteChoices <- function() {
-  c("rich","cm","default","grey","gray","heat","jet","rainbow","topo","terrain")
+  c("rich","cm","default","grey","gray","heat","rainbow","topo","terrain")
 }

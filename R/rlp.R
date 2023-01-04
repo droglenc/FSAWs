@@ -12,7 +12,6 @@
 #' 
 #' If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category.  This will make it easier to identify populations that \dQuote{cross over} other populations.
 #' 
-#' @aliases rlp plot.rlp anova.rlp coef.rlp predict.rlp fitPlot.rlp residPlot.rlp summary.rlp
 #' @param log.a A numeric vector that contains the \eqn{log_{10}(a)} values for the population of length-weight regression equations.
 #' @param b A numeric vector that contains the b values for the population of length-weight regression equations
 #' @param min A number that indicates the midpoint value of the smallest X-mm length category.
@@ -47,52 +46,64 @@
 #'   \item \code{Ws} is an \code{lm} object that contains the results of the regression of \eqn{log_{10}(wq)} on \eqn{log_{10}(midpoint length)}.
 #' }
 #' 
-#' @author Derek H. Ogle, \email{dogle@@northland.edu}
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
 #' 
 #' @seealso \code{\link{emp}}, \code{\link{FroeseWs}}, and \code{\link{wsValidate}}; and \code{quantile} in \pkg{stats}
 #' 
 #' @references Murphy, B.R., M.L. Brown, and T.A. Springer.  1990.  Evaluation of the relative weight (Wr) index, with new applications to walleye.  North American Journal of Fisheries Management, 10:85-97.
+#' 
+#' @aliases rlp plot.rlp anova.rlp coef.rlp predict.rlp fitPlot.rlp residPlot.rlp summary.rlp
 #' 
 #' @keywords manip hplot
 #' 
 #' @examples
 #' ## Recreate Murphy et al. (1990) results for largemouth bass
 #' # min and max lengths were 152 and 816
-#' # compare to log.a=-5.379 and b=3.221
 #' data(LMBassWs)
 #' lmb.rlp <- rlp(LMBassWs$log.a,LMBassWs$b,155,815,qtype=6)
 #' coef(lmb.rlp)
+#' # compare to log.a=-5.379 and b=3.221
 #' plot(lmb.rlp)
-#' #fitPlot(lmb.rlp)
-#' #residPlot(lmb.rlp)
+#' FSAmisc::fitPlot(lmb.rlp$Ws)
+#' FSAmisc::residPlot(lmb.rlp$Ws)
 #' 
 #' @rdname rlp
-#' @export rlp
+#' @export
 rlp <- function(log.a,b,min,max,w=10,qtype=8,probs=0.75,digits=NULL) {
-  midpt <- seq(min,max,w)                                          # create length-class midpoints
-  for (i in 1:length(log.a)) {                                     # predict weight at each 1-cm midpoint for each population
+  # create length-class midpoints
+  midpt <- seq(min,max,w)                                          
+  # predict weight at each 1-cm midpoint for each population
+  for (i in 1:length(log.a)) {                                     
     w <- 10^(log.a[i]+b[i]*log10(midpt))
     if (!is.null(digits)) w <- round(w,digits)
-    if (i==1) pred.w <- w                                          # store in a matrix called pred.w
+    # store in a matrix called pred.w
+    if (i==1) pred.w <- w                                          
     else pred.w <- cbind(pred.w,w)
   }
-  colnames(pred.w) <- seq(1:dim(pred.w)[2])                        # rename columns to numbers that correspond to populations
-  rownames(pred.w) <- midpt                                        # rename rows to correspond to midpt lengths
-  wq <- apply(pred.w,MARGIN=1,FUN=quantile,probs=probs,type=qtype) # find qth percentile of predicted weights
+  # rename columns to numbers that correspond to populations
+  colnames(pred.w) <- seq(1:dim(pred.w)[2])                        
+  # rename rows to correspond to midpt lengths
+  rownames(pred.w) <- midpt                                        
+  # find qth percentile of predicted weights
+  wq <- apply(pred.w,MARGIN=1,FUN=stats::quantile,probs=probs,type=qtype) 
   logwq <- log10(wq)
   logmidpt <- log10(midpt)
-  Ws <- lm(logwq~logmidpt)                                 # regression of qth weights on lengths to get Ws equation                                         
-  z <- list(log.a=log.a,b=b,data.pred=pred.w,regdata=data.frame(midpt=midpt,wq=wq,logmidpt=logmidpt,logwq=logwq),Ws=Ws,probs=probs)
+  # regression of qth weights on lengths to get Ws equation                              
+  Ws <- stats::lm(logwq~logmidpt)                                            
+  z <- list(log.a=log.a,b=b,data.pred=pred.w,
+            regdata=data.frame(midpt=midpt,wq=wq,logmidpt=logmidpt,logwq=logwq),
+            Ws=Ws,probs=probs)
   class(z) <- "rlp"
   z
 }
 
 #' @rdname rlp
-#' @method plot rlp
-#' @S3method plot rlp
+#' @export
 plot.rlp <- function(x,what=c("both","raw","log"),
-                     col.pop=c("rich","cm","default","grey","gray","heat","jet","rainbow","topp","terrain"),
-                     lwd.pop=1,lty.pop=1,order.pop=TRUE,col.Ws="black",lwd.Ws=3,lty.Ws=1,...) {
+                     col.pop=c("rich","cm","default","grey","gray","heat",
+                               "jet","rainbow","topp","terrain"),
+                     lwd.pop=1,lty.pop=1,order.pop=TRUE,
+                     col.Ws="black",lwd.Ws=3,lty.Ws=1,...) {
   object <- x
   what <- match.arg(what)
   col.pop <- match.arg(col.pop)
@@ -100,61 +111,55 @@ plot.rlp <- function(x,what=c("both","raw","log"),
   ml <- object$regdata$midpt
   pw <- object$data.pred
   if (order.pop) pw <- pw[,order(pw[1,])]
-  if (what=="both") old.par <- par(mar=c(3.5,3.5,1,1), mfcol=c(1,2), mgp=c(2,0.75,0))
-    else old.par <- par(mar=c(3.5,3.5,1,1), mgp=c(2,0.75,0))
-  on.exit(par(old.par))
+  if (what=="both") old.par <- graphics::par(mar=c(3.5,3.5,1,1),
+                                             mfcol=c(1,2),mgp=c(2,0.75,0))
+    else old.par <- graphics::par(mar=c(3.5,3.5,1,1),mgp=c(2,0.75,0))
+  on.exit(graphics::par(old.par))
   if (what=="raw" | what=="both") {
-    matplot(ml,pw,type="l",lty=lty.pop,lwd=lwd.pop,col=col.pop,xlab="Length (mm)",ylab="Weight (g)")
-    curve(10^coef(object$Ws)[1]*x^coef(object$Ws)[2],min(ml),max(ml),lty=lty.Ws,lwd=lwd.Ws,col=col.Ws,add=TRUE)
+    graphics::matplot(ml,pw,type="l",lty=lty.pop,lwd=lwd.pop,col=col.pop,
+                      xlab="Length (mm)",ylab="Weight (g)")
+    graphics::curve(10^stats::coef(object$Ws)[1]*x^stats::coef(object$Ws)[2],
+                    min(ml),max(ml),lty=lty.Ws,lwd=lwd.Ws,col=col.Ws,add=TRUE)
   }
   if (what=="log" | what=="both") {
-    matplot(log10(ml),log10(pw),type="l",lty=lty.pop,lwd=lwd.pop,col=col.pop,xlab="log10(Length (mm))",ylab="log10(Weight (g))")
-    abline(object$Ws,lty=lty.Ws,lwd=lwd.Ws,col=col.Ws)
+    graphics::matplot(log10(ml),log10(pw),type="l",
+                      lty=lty.pop,lwd=lwd.pop,col=col.pop,
+                      xlab="log10(Length (mm))",ylab="log10(Weight (g))")
+    graphics::abline(object$Ws,lty=lty.Ws,lwd=lwd.Ws,col=col.Ws)
   }
 }
 
 #' @rdname rlp
-#' @method anova rlp
-#' @S3method anova rlp
+#' @export
 anova.rlp <- function(object,...) {
-  anova(object$Ws,...)
+  stats::anova(object$Ws,...)
 }
 
 #' @rdname rlp
-#' @method coef rlp
-#' @S3method coef rlp
+#' @export
 coef.rlp <- function(object,...) {
-  coef(object$Ws,...)
+  stats::coef(object$Ws,...)
 }
 
 #' @rdname rlp
-#' @method predict rlp
-#' @S3method predict rlp
+#' @export
 predict.rlp <- function(object,...) {
-  predict(object$Ws,...)
+  stats::predict(object$Ws,...)
 }
 
 #' @rdname rlp
-#' @method summary rlp
-#' @S3method summary rlp
+#' @export
 summary.rlp <- function(object,...) {
   summary(object$Ws,...)
 }
 
 #' @rdname rlp
-#' @method fitPlot rlp
-#' @S3method fitPlot rlp
+#' @export
 fitPlot.rlp <- function(object,pch=16,col.pt="black",col.Ws="red",lwd.Ws=3,lty.Ws=1,
         xlab="log10(midpt Length)",
         ylab=paste("log10(",100*object$prob," Percentile of Predicted Weight)",sep=""),
         main="RLP Equation Fit",...) {
-  plot(object$regdata$logwq~object$regdata$logmidpt,pch=pch,col=col.pt,xlab=xlab,ylab=ylab,main=main,...)
-  abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
+  graphics::plot(object$regdata$logwq~object$regdata$logmidpt,
+                 pch=pch,col=col.pt,xlab=xlab,ylab=ylab,main=main,...)
+  graphics::abline(object$Ws,col=col.Ws,lwd=lwd.Ws,lty=lty.Ws)
 }
-
-#' @rdname rlp
-#' @method residPlot rlp
-#' @S3method residPlot rlp
-residPlot.rlp <- function(object,...) {
-  residPlot(object$Ws)
-} 

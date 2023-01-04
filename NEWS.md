@@ -1,5 +1,14 @@
-# FSAWs 0.0.1 ongoing
+# FSAWS 0.0.2 
+* DESCRIPTION file: Added `LazyData: true` and `Encoding: UTF-8` to, fixed title and author fields.
+# Removed `FSA` (not needed when package moved) and `gdata` (replaced all `drop.levels()` with `droplevels()`) from "Imports"
+* Handled issues with "@S3Method" in `emp()`, `FroeseWs`, `rlp()`, `wsValidate()`.
+* Fixed line lengths and added `package::` where needed in `emp()`, `FroeseWs`, `rlp()`, `wsValidate()`, and `chooseColors()`.
 
+* `chooseColors()` and `paletteChoices()`: Removed `jet` option (so as not to require a package dependency).
+* `emp()`: Removed related `residPlot()` (use `FSAmisc::residPlot()` instead as shown in some examples).
+* `rlp()`: Removed related `residPlot()` (use `FSAmisc::residPlot()` instead as shown in some examples).
+
+# FSAWs 0.0.1 2014
 * Started this package with functions from FSA v0.4.6 and FSAdata v0.1.5.
 * `BluegillWs`: added.
 * `emp()`: added.

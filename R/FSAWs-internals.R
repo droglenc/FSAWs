@@ -35,14 +35,20 @@
 ##################################################################
 ## Internal files used in emp, wsValidate                                     
 ##################################################################
-lencatOLD <- function(df,cl,startcat=0,w=1,breaks=NULL,right=FALSE,vname=NULL,as.fact=TRUE,drop.levels=FALSE) {
+lencatOLD <- function(df,cl,startcat=0,w=1,breaks=NULL,right=FALSE,
+                      vname=NULL,as.fact=TRUE,drop.levels=FALSE) {
   ## INTERNAL -- make.vname
   make.vname <- function(vname,df) {
-    if (is.null(vname)) vname <- "LCat"                   # if no name given then default to "LCat"
-    vnames <- c(vname,paste(vname,seq(1:100),sep=""))     # create list of names that includes vname & vname with numbers appended 
-    ind <- which(vnames %in% names(df))                   # find first instance where names match
-    if (length(ind)==0) vname <- vname                    # if no match then go with given vname
-    else vname <- vnames[max(ind)+1]                    # if is match then go with name that is one index later in vnames
+    # if no name given then default to "LCat"
+    if (is.null(vname)) vname <- "LCat"                   
+    # create list of names that includes vname & vname with numbers appended 
+    vnames <- c(vname,paste(vname,seq(1:100),sep=""))     
+    # find first instance where names match
+    ind <- which(vnames %in% names(df))                   
+    # if no match then go with given vname
+    if (length(ind)==0) vname <- vname                  
+    # if is match then go with name that is one index later in vnames
+    else vname <- vnames[max(ind)+1]                    
     vname
   }
   ## INTERNAL -- checkStartcatW
@@ -80,10 +86,14 @@ lencatOLD <- function(df,cl,startcat=0,w=1,breaks=NULL,right=FALSE,vname=NULL,as
   }
   lcat <- breaks[cut(df[,cl],breaks,labels=FALSE,right=right,include.lowest=TRUE)]
   if (as.fact) {
-    if (!drop.levels) lcat <- factor(lcat,levels=breaks[-length(breaks)])        # Generally don't drop levels but need to drop the "extra" last level in all cases
+    # Generally don't drop levels but need to drop the "extra" last level in all cases
+    if (!drop.levels) lcat <- factor(lcat,levels=breaks[-length(breaks)])        
     else lcat <- factor(lcat)
   }
-  nd <- data.frame(df,lcat)                                                      # Puts length class variable in data.frame
-  names(nd)[dim(df)[2]+1] <- make.vname(vname,df)                                # Renames the new variable if so desired
-  nd                                                                             # Returns the new data.frame
+  # Puts length class variable in data.frame
+  nd <- data.frame(df,lcat)                                                      
+  # Renames the new variable if so desired
+  names(nd)[dim(df)[2]+1] <- make.vname(vname,df) 
+  # Returns the new data.frame
+  nd
 }
