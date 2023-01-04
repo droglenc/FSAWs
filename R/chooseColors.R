@@ -1,8 +1,7 @@
 #' @title Create a list of colors from among a variety of color palettes.
-#' 
 #' @description Create a list of colors from among a variety of color palettes.
 #' 
-#' @param pal A character that is the name of a palette.  Must be one of \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain}.
+#' @param pal A character that is the name of a palette.  Must be one of \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain}.
 #' @param num The number of colors to be returned.
 #' @param \dots Other arguments to the various palette functions.
 #' 
@@ -40,4 +39,15 @@ chooseColors <- function(pal=paletteChoices(),num,...) {
   )
   clrs
 }
-  
+
+
+#' @title Provides a vector of possible color palettes.
+#' @description Provides a vector of possible color palettes.
+#' @details Generally serves as an internal function and should be called by the user.
+#' @return A single string with a palette name.
+#' @author Derek H. Ogle, \email{DerekOgle51@gmail.com}
+#' @keywords misc
+#' @export
+paletteChoices <- function() {
+  c("rich","cm","default","grey","gray","heat","rainbow","topo","terrain")
+}

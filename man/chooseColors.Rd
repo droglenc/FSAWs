@@ -7,7 +7,7 @@
 chooseColors(pal = paletteChoices(), num, ...)
 }
 \arguments{
-\item{pal}{A character that is the name of a palette.  Must be one of \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain}.}
+\item{pal}{A character that is the name of a palette.  Must be one of \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain}.}
 
 \item{num}{The number of colors to be returned.}
 
