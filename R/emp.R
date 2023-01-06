@@ -131,7 +131,7 @@ emp <- function(df,pops,len,wt,min,max,w=10,n.cutoff=3,cutoff.tail=TRUE,qtype=8,
    logWq <- tapply(df2$mn.logW,df2$fLCat,stats::quantile,probs=probs,type=qtype)
    regdf <- data.frame(midpt=as.numeric(names(logWq)),
                        Wq=10^(logWq),logmidpt=log10(as.numeric(names(logWq))),
-                       logwq=logWq,n=p.n.tbl[names(logWq)])
+                       logwq=logWq,n=as.numeric(p.n.tbl[names(logWq)]))
 
    # fit the regression to define the Ws equation
    if (method=="lm") Ws <- stats::lm(logwq~logmidpt,data=regdf,weights=n)

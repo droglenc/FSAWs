@@ -1,4 +1,12 @@
-# FSAWS 0.0.2 
+# FSAWS 0.0.3
+* Added `graphics`, `grDevices`, and `stats` to IMPORTS.
+* Added `testthat` to SUGGESTS.
+* Added tests for `rlp()`, `emp()`, and `wsValidate()`.
+
+* `emp()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
+* `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
+
+# FSAWS 0.0.2 6-Jan-2023 
 * DESCRIPTION file: Added `LazyData: true` and `Encoding: UTF-8` to, fixed title and author fields.
 # Removed `FSA` (not needed when package moved) and `gdata` (replaced all `drop.levels()` with `droplevels()`) from "Imports"
 * Handled issues with "@S3Method" in `emp()`, `FroeseWs`, `rlp()`, `wsValidate()`.

@@ -1,0 +1,71 @@
+
+## Test Messages
+
+
+## Test Output Types
+
+
+## Validate Results
+test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
+  source_test_helpers()
+
+  ## Compare 75th percentile results to those in Table 2 of Ogle & Winfield
+  ### Willis method
+  res <- wsValidate(ruf75,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                    type="Willis")
+  tmp <- summary(res)
+  expect_identical(tmp$statistic,c("number of successes"=15))
+  expect_identical(tmp$parameter,c("number of trials"=22))
+  expect_equal(tmp$p.value,c("Negative"=0.1338),tolerance=0.0001)
+  ### Weighted EmpQ method
+  res <- wsValidate(ruf75,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                    type="EmpQ",weighted=TRUE)
+  tmp <- anova(res)
+  expect_identical(tmp$Df,c(1L,1L,10L))
+  expect_equal(tmp$`Pr(>F)`,c(0.4401,0.9174,NA),tolerance=0.0001)
+
+  ## Compare 50th percentile results to those in Table 2 of Ogle & Winfield
+  ### Willis method
+  res <- wsValidate(ruf50,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                    type="Willis")
+  tmp <- summary(res)
+  expect_identical(tmp$statistic,c("number of successes"=12))
+  expect_identical(tmp$parameter,c("number of trials"=20))
+  expect_equal(tmp$p.value,c("Negative"=0.5034),tolerance=0.0001)
+  ### Weighted EmpQ method
+  res <- wsValidate(ruf50,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                    type="EmpQ",weighted=TRUE,probs=0.5)
+  tmp <- anova(res)
+  expect_identical(tmp$Df,c(1L,1L,10L))
+  expect_equal(tmp$`Pr(>F)`,c(0.4838,0.9368,NA),tolerance=0.0001)
+  
+  ## Compare 75th percentile (no quad) results to those in Table 2 of Ogle & Winfield
+  res <- wsValidate(ruf75nq,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                    type="Willis")
+  tmp <- summary(res)
+  expect_identical(tmp$statistic,c("number of successes"=16))
+  expect_identical(tmp$parameter,c("number of trials"=17))
+  expect_equal(tmp$p.value,c("Negative"=0.0003),tolerance=0.0001)
+  ### Weighted EmpQ method
+  res <- wsValidate(ruf75nq,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                    type="EmpQ",weighted=TRUE)
+  tmp <- anova(res)
+  expect_identical(tmp$Df,c(1L,1L,10L))
+  expect_equal(tmp$`Pr(>F)`,c(0.5308,0.0024,NA),tolerance=0.0001)
+  
+  ## Compare 50th percentile (no quad) results to those in Table 2 of Ogle & Winfield
+  ### Willis method
+  res <- wsValidate(ruf50nq,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                    type="Willis")
+  tmp <- summary(res)
+  expect_identical(tmp$statistic,c("number of successes"=14))
+  expect_identical(tmp$parameter,c("number of trials"=19))
+  expect_equal(tmp$p.value,c("Negative"=0.0636),tolerance=0.0001)
+  ### Weighted EmpQ method
+  res <- wsValidate(ruf50nq,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                    type="EmpQ",weighted=TRUE,probs=0.5)
+  tmp <- anova(res)
+  expect_identical(tmp$Df,c(1L,1L,10L))
+  expect_equal(tmp$`Pr(>F)`,c(0.3844,0.0685,NA),tolerance=0.0001)
+  
+})

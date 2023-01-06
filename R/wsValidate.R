@@ -111,7 +111,8 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
     # find the desired quantile (or mean) of mean W in each length category
     if (use.means) Wq <- tapply(df2$mn.W,df2$fLCat,mean)
     else Wq <- tapply(df2$mn.W,df2$fLCat,stats::quantile,probs=probs,type=qtype)
-    regdf <- data.frame(midpt=as.numeric(names(Wq)),wq=Wq,n=p.n.tbl[names(Wq)])
+    regdf <- data.frame(midpt=as.numeric(names(Wq)),wq=Wq,
+                        n=as.numeric(p.n.tbl[names(Wq)]))
     # add computed Ws & stndrdzd quantile (or mean) mean weight to df
     regdf$Ws <- compute.Ws(object,regdf$midpt)                                        
     regdf$Wr <- (regdf$wq/regdf$Ws)*100
