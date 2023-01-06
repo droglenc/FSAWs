@@ -12,7 +12,6 @@ Imports:
     grDevices,
     stats,
     FSA,
-    gplots,
     quantreg
 Suggests:
     testthat

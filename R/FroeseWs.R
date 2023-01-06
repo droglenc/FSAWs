@@ -6,7 +6,7 @@
 #' 
 #' The \code{plot} and \code{coef} methods are used to construct a plot (see below) and extract the coefficients of the standard weight equation. The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}. The \code{"raw"} plot plots lines on the length-weight scale for each population represented in the \code{log.a} and \code{b} vectors with the resultant standard weight equation superimposed in red. The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale. The \code{"both"} option produces both plots side-by-side.
 #' 
-#' If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
+#' If the \code{col.pop} argument is set equal to one of the palettes in \code{paletteChoices} and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 #' 
 #' @param log.a A numeric vector that contains the \eqn{log_{10}(a)} values for the population of length-weight regression equations.
 #' @param b A numeric vector that contains the b values for the population of length-weight regression equations
@@ -59,7 +59,7 @@ coef.FroeseWs <- function(object,...) {
 #' @rdname FroeseWs
 #' @export
 plot.FroeseWs <- function(x,min,max,what=c("both","raw","log"),
-                          col.pop="rich",lwd.pop=1,lty.pop=1,order.pop=TRUE,
+                          col.pop="rainbow",lwd.pop=1,lty.pop=1,order.pop=TRUE,
                           col.Ws="black",lwd.Ws=3,lty.Ws=1,...) {
   object <- x
   what <- match.arg(what)

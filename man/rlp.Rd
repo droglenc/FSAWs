@@ -15,8 +15,7 @@ rlp(log.a, b, min, max, w = 10, qtype = 8, probs = 0.75, digits = NULL)
 \method{plot}{rlp}(
   x,
   what = c("both", "raw", "log"),
-  col.pop = c("rich", "cm", "default", "grey", "gray", "heat", "jet", "rainbow", "topp",
-    "terrain"),
+  col.pop = "rainbow",
   lwd.pop = 1,
   lty.pop = 1,
   order.pop = TRUE,
@@ -118,7 +117,7 @@ It appears that Murphy et al. (1990) used \code{qtype=6} in their SAS program. T
 
 The \code{plot}, \code{coef}, and \code{summary} methods are used to construct a plot (see below), extract the coefficients of the standard weight equation, and find summary results of the \code{lm} object returned by the main function. The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}. The \code{"raw"} plot plots lines on the length-weight scale for each population represented in the \code{log.a} and \code{b} vectors with the resultant standard weight equation superimposed in red. The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale. The \code{"both"} option produces both plots side-by-side.
 
-If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
+If the \code{col.pop} argument is set equal to one of the palettes in \code{paletteChoices} and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 }
 \examples{
 ## Recreate Murphy et al. (1990) results for largemouth bass

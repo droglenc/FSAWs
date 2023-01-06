@@ -38,7 +38,7 @@ emp(
 \method{plot}{emplm}(
   x,
   pch = 16,
-  col.pop = "rich",
+  col.pop = "rainbow",
   col.Ws = "black",
   lwd.Ws = 3,
   lty.Ws = 1,
@@ -63,7 +63,7 @@ emp(
 \method{fitPlot}{emprq}(
   object,
   pch = 16,
-  col.pop = "rich",
+  col.pop = "rainbow",
   col.Ws = "black",
   lwd.Ws = 3,
   lty.Ws = 1,
@@ -147,7 +147,7 @@ Gerow et al. (2005) suggest using a quantile definition that is basically the sa
 
 The \code{plot}, \code{coef}, and \code{summary} methods are used to construct a plot (see below), extract the coefficients of the standard weight equation, and find summary results of the \code{lm} object returned by the main function. The \code{plot} method plots the mean log10 weights versus length category midpoint for each population represented in the data frame with the resultant standard weight equation superimposed in black.
 
-If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
+If the \code{col.pop} argument is set equal to one of the palettes in \code{paletteChoices} and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 }
 \examples{
 ## Walleye Ws equation for comparison to Gerow's Excel Tool
