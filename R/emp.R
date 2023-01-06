@@ -97,7 +97,7 @@ emp <- function(df,pops,len,wt,min,max,w=10,n.cutoff=3,cutoff.tail=TRUE,qtype=8,
    # create data frame with mean logW, midpoints, and n to be used for EmP method
    df$logwt <- log10(df[,wt])
    # adds lwr bnd len cat to df -- not factor for midpoint correction next
-   df <- lencatOLD(df,len,startcat=min-w/2,w=w,as.fact=FALSE)
+   df$LCat <- FSA::lencat(df[,len],w=w,startcat=min-w/2,as.fact=FALSE)
    # converts lower bound of category to a midpoint value
    df$LCat <- df$LCat+w/2
    # finds n and mean for each popn and length category

@@ -1,9 +1,12 @@
 # FSAWS 0.0.3
 * Added `graphics`, `grDevices`, and `stats` to IMPORTS.
+* Added `FSA` to IMPORTS (see `lencatoLD()` below).
 * Added `testthat` to SUGGESTS.
 * Added tests for `rlp()`, `emp()`, and `wsValidate()`.
 
+* `.onAttach()`: Streamlined output.
 * `emp()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
+* `lencatOLD()`: Removed internal function, replaced with `FSA::lencat()`. This required changes to `emp()` and `wsValidate()` (*tests held after changes*).
 * `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
 
 # FSAWS 0.0.2 6-Jan-2023 

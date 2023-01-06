@@ -11,6 +11,7 @@ Imports:
     graphics,
     grDevices,
     stats,
+    FSA,
     gplots,
     quantreg
 Suggests:
