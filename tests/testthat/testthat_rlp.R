@@ -37,14 +37,13 @@ test_that("rlp() match Ogle & Winfield (2009) results for Ruffe", {
   source_test_helpers()
   
   ## 75th percenile
-  ruf.rlp75 <- rlp(reg.d$loga,reg.d$b,min=60,max=210,w=10)
-  res <- coef(ruf.rlp75)
+  res <- coef(ruf75.rlp)
   ## Both results are equal
   expect_equal(res[["(Intercept)"]],-4.9588,tolerance=0.00001)
   expect_equal(res[["logmidpt"]],3.0286,tolerance=0.00001)
+
   ## 50th percenile
-  ruf.rlp50 <- rlp(reg.d$loga,reg.d$b,min=60,max=210,w=10,probs=0.5)
-  res <- coef(ruf.rlp50)
+  res <- coef(ruf50.rlp)
   ## Both results are equal
   expect_equal(res[["(Intercept)"]],-4.9573,tolerance=0.00001)
   expect_equal(res[["logmidpt"]],3.0154,tolerance=0.00001)

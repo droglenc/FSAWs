@@ -43,29 +43,29 @@ test_that("emp() match Ogle & Winfield (2009) results for Ruffe", {
   source_test_helpers()
   
   ## Compare 75th percentile results to those in Table 2 of Ogle & Winfield
-  res <- coef(ruf75)
+  res <- coef(ruf75.emp)
   ## Compare sample sizes to that in Table 1 of Ogle & Winfield
-  expect_equal(as.vector(ruf75$pop.by.len),
+  expect_equal(as.vector(ruf75.emp$pop.by.len),
                c(63,69,84,88,84,84,77,60,48,31,24,22,12,8,4,3,1))
-  expect_equal(as.vector(ruf75$ind.by.len),
+  expect_equal(as.vector(ruf75.emp$ind.by.len),
                c(1317,1564,2111,2326,2041,1605,1367,969,634,434,206,152,65,29,9,3,1))
   expect_equal(res[["(Intercept)"]],-2.5800,tolerance=0.0001)
   expect_equal(res[["logmidpt"]],0.6210,tolerance=0.0001)
   expect_equal(res[["I(logmidpt^2)"]],0.6073,tolerance=0.0001)
   
   ## Compare 50th percentile results to those in Table 2 of Ogle & Winfield
-  res <- coef(ruf50)
+  res <- coef(ruf50.emp)
   expect_equal(res[["(Intercept)"]],-3.3524,tolerance=0.0001)
   expect_equal(res[["logmidpt"]],1.3969,tolerance=0.0001)
   expect_equal(res[["I(logmidpt^2)"]],0.4054,tolerance=0.0001)
   
   ## Compare 75th percentile (no quad) results to those in Table 2 of Ogle & Winfield
-  res <- coef(ruf75nq)
+  res <- coef(ruf75nq.emp)
   expect_equal(res[["(Intercept)"]],-5.0206,tolerance=0.0001)
   expect_equal(res[["logmidpt"]],3.0612,tolerance=0.0001)
 
   ## Compare 50th percentile (no quad) results to those in Table 2 of Ogle & Winfield
-  res <- coef(ruf50nq)
+  res <- coef(ruf50nq.emp)
   expect_equal(res[["(Intercept)"]],-4.9818,tolerance=0.0001)
   expect_equal(res[["logmidpt"]],3.0259,tolerance=0.0001)
 })
