@@ -84,7 +84,7 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
   EmpQ <- function(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,
                    qtype,probs,quadratic,weighted) {
     # adds lwr bnd len cat to df -- not factor for midpoint correction next
-    df <- lencatOLD(df,len,startcat=min-w/2,w=w,as.fact=FALSE)
+    df$LCat <- FSA::lencat(df[,len],w=w,startcat=min-w/2,as.fact=FALSE)
     # converts lower bound of category to a midpoint value
     df$LCat <- df$LCat+w/2
     # finds n and mean for each popn and length category

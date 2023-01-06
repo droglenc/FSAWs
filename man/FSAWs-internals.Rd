@@ -2,18 +2,11 @@
 % Please edit documentation in R/FSAWs-internals.R
 \name{.onAttach}
 \alias{.onAttach}
-\alias{lencatOLD}
 \title{Internal functions used in FSAWs.}
 \usage{
 .onAttach(lib, pkg, ...)
 }
 \description{
 Internal functions used in FSAWs
-}
-\note{
-Take note of the following uses:
-\itemize{
- \item \code{lencatOLD} used in \code{\link{emp}} and \code{\link{wsValidate}}.
-}
 }
 \keyword{internal}
