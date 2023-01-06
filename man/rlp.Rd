@@ -7,7 +7,6 @@
 \alias{coef.rlp}
 \alias{predict.rlp}
 \alias{fitPlot.rlp}
-\alias{residPlot.rlp}
 \alias{summary.rlp}
 \title{Computes the standard weight equation using the regression-line-percentile method.}
 \usage{
@@ -59,23 +58,23 @@ rlp(log.a, b, min, max, w = 10, qtype = 8, probs = 0.75, digits = NULL)
 
 \item{w}{A number that indicates the widths for which to create length categories.}
 
-\item{qtype}{Type of quantile method to use.  See details.}
+\item{qtype}{Type of quantile method to use. See details.}
 
-\item{probs}{A number that indicates the probability of the quantile.  Must be between 0 and 1.}
+\item{probs}{A number that indicates the probability of the quantile. Must be between 0 and 1.}
 
 \item{digits}{Number of digits to round predicted weights.}
 
 \item{x}{An object saved from the \code{rlp} call (i.e., of class \code{rlp}).}
 
-\item{what}{A string that indicates the type of plot to produce.  See details.}
+\item{what}{A string that indicates the type of plot to produce. See details.}
 
-\item{col.pop}{A string that indicates the type of color or palette to use for the population of length-weight regression lines.  See details.}
+\item{col.pop}{A string that indicates the type of color or palette to use for the population of length-weight regression lines. See details.}
 
 \item{lwd.pop}{A numeric that indicates the width of the line to use for the population of length-weight regression lines.}
 
 \item{lty.pop}{A numeric that indicates the type of line to use for the population of length-weight regression lines.}
 
-\item{order.pop}{A logical that indicates whether the populations should be plotted from the smallest to largest weight in the initial length category.  See details.}
+\item{order.pop}{A logical that indicates whether the populations should be plotted from the smallest to largest weight in the initial length category. See details.}
 
 \item{col.Ws}{A string that indicates the type of color to use for the standard length-weight regression line.}
 
@@ -111,15 +110,15 @@ A list is returned with the following items:
 Computes the standard weight equation using the regression-line-percentile method when given the log(a) and b values for a population of length-weight regression equations.
 }
 \details{
-The main function follows the steps of the regression-line-percentile method detailed in Murphy et al. (1990).  In summary, a predicted weight is constructed for each 1-cm length class from each population from the given \eqn{log_{10}(a)} and \eqn{b} values, the predicted weight at the \code{prob}th percentile (wq) is identified, and a linear regression equation is fit to the \eqn{log_{10}(wq)} and \eqn{log_{10}(midpoint length)} data.
+The main function follows the steps of the regression-line-percentile method detailed in Murphy et al. (1990). In summary, a predicted weight is constructed for each 1-cm length class from each population from the given \eqn{log_{10}(a)} and \eqn{b} values, the predicted weight at the \code{prob}th percentile (wq) is identified, and a linear regression equation is fit to the \eqn{log_{10}(wq)} and \eqn{log_{10}(midpoint length)} data.
 
 Note that \eqn{log_{10}(a)} and \eqn{b} must be from the regression of \eqn{log_{10}(W)} on \eqn{log_{10}(L)} where W is measured in grams and L is the total length measured in mm.
 
-It appears that Murphy et al. (1990) used \code{qtype=6} in their SAS program.  Types of quantile calculation methods are discussed in the details of of \code{quantile}.
+It appears that Murphy et al. (1990) used \code{qtype=6} in their SAS program. Types of quantile calculation methods are discussed in the details of of \code{quantile}.
 
-The \code{plot}, \code{coef}, and \code{summary} methods are used to construct a plot (see below), extract the coefficients of the standard weight equation, and find summary results of the \code{lm} object returned by the main function.  The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}.  The \code{"raw"} plot plots lines on the length-weight scale for each population represented in the \code{log.a} and \code{b} vectors with the resultant standard weight equation superimposed in red.  The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale.  The \code{"both"} option produces both plots side-by-side.
+The \code{plot}, \code{coef}, and \code{summary} methods are used to construct a plot (see below), extract the coefficients of the standard weight equation, and find summary results of the \code{lm} object returned by the main function. The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}. The \code{"raw"} plot plots lines on the length-weight scale for each population represented in the \code{log.a} and \code{b} vectors with the resultant standard weight equation superimposed in red. The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale. The \code{"both"} option produces both plots side-by-side.
 
-If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category.  This will make it easier to identify populations that \dQuote{cross over} other populations.
+If the \code{col.pop} argument is set equal to one of these palettes -- \dQuote{rich}, \dQuote{cm}, \dQuote{default}, \dQuote{grey}, \dQuote{gray}, \dQuote{heat}, \dQuote{jet}, \dQuote{rainbow}, \dQuote{topo}, or \dQuote{terrain} -- and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 }
 \examples{
 ## Recreate Murphy et al. (1990) results for largemouth bass
@@ -135,7 +134,7 @@ abline(h=0,lty=3)
 
 }
 \references{
-Murphy, B.R., M.L. Brown, and T.A. Springer.  1990.  Evaluation of the relative weight (Wr) index, with new applications to walleye.  North American Journal of Fisheries Management, 10:85-97.
+Murphy, B.R., M.L. Brown, and T.A. Springer. 1990. Evaluation of the relative weight (Wr) index, with new applications to walleye. North American Journal of Fisheries Management, 10:85-97.
 }
 \seealso{
 \code{\link{emp}}, \code{\link{FroeseWs}}, and \code{\link{wsValidate}}; and \code{quantile} in \pkg{stats}

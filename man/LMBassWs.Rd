@@ -3,7 +3,7 @@
 \docType{data}
 \name{LMBassWs}
 \alias{LMBassWs}
-\title{Length-weight regression results for computing Ws for largemouth bass.}
+\title{Length-weight regression results for computing Ws for Largemouth Bass.}
 \format{
 A data frame with 16 observations on the following 5 variables:
 \describe{ 
@@ -15,10 +15,10 @@ A data frame with 16 observations on the following 5 variables:
 }
 }
 \description{
-Length-weight regression results from a variety of populations used for computing the standard weight (Ws) equation for largemouth bass (\emph{Micropterus dolomieu}).
+Length-weight regression results from a variety of populations used for computing the standard weight (Ws) equation for Largemouth Bass (\emph{Micropterus dolomieu}).
 }
 \details{
-Each row contains the intercept (\code{log.a}) and slope (\code{b}) results from fitting the \eqn{log_{10}(W) = log_{10}(a) + b log_{10}(L)} linear regression model to a population of \code{n} fish from the given location and state.  Note that \eqn{W} is weight in grams and \eqn{L} is length in mm.
+Each row contains the intercept (\code{log.a}) and slope (\code{b}) results from fitting the \eqn{log_{10}(W) = log_{10}(a) + b log_{10}(L)} linear regression model to a population of \code{n} fish from the given location and state. Note that \eqn{W} is weight in grams and \eqn{L} is length in mm.
 }
 \examples{
 data(LMBassWs)

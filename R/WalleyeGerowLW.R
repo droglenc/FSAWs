@@ -1,6 +1,6 @@
-#' @title Raw length-weight data that can be used to compute the Ws for walleye as performed in Gerow (2005).
+#' @title Raw length-weight data that can be used to compute the Ws for Walleye as performed in Gerow (2005).
 #'
-#' @description Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for walleye (\emph{Sander vitreus vitreus}).
+#' @description Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Walleye (\emph{Sander vitreus vitreus}).
 #'
 #' @name WalleyeGerowLW
 #'

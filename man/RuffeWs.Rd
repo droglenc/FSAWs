@@ -3,7 +3,7 @@
 \docType{data}
 \name{RuffeWs}
 \alias{RuffeWs}
-\title{Raw Length-weight data that can be used to compute the Ws for ruffe.}
+\title{Raw Length-weight data that can be used to compute the Ws for Ruffe.}
 \format{
 A data frame with 20005 observations on the following 13 variables:
 \describe{
@@ -23,10 +23,10 @@ A data frame with 20005 observations on the following 13 variables:
 }
 }
 \source{
-From Ogle, D.H. and I.J. Winfield.  2009.  Ruffe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-85.
+From Ogle, D.H. and I.J. Winfield. 2009. Ruffe length-weight relationships with a proposed standard weight equation. North American Journal of Fisheries Management 29:850-85.
 }
 \description{
-Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for ruffe (\emph{Gymnocephalus cernuus}).
+Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Ruffe (\emph{Gymnocephalus cernuus}).
 }
 \examples{
 data(RuffeWs)

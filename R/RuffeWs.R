@@ -1,6 +1,6 @@
-#' @title Raw Length-weight data that can be used to compute the Ws for ruffe.
+#' @title Raw Length-weight data that can be used to compute the Ws for Ruffe.
 #' 
-#' @description Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for ruffe (\emph{Gymnocephalus cernuus}).
+#' @description Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Ruffe (\emph{Gymnocephalus cernuus}).
 #' 
 #' @name RuffeWs
 #' 
@@ -25,7 +25,7 @@
 #' 
 #' @seealso \code{\link{rlp}}, \code{\link{emp}}, and \code{\link{wsValidate}}.
 #' 
-#' @source From Ogle, D.H. and I.J. Winfield.  2009.  Ruffe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-85.
+#' @source From Ogle, D.H. and I.J. Winfield. 2009. Ruffe length-weight relationships with a proposed standard weight equation. North American Journal of Fisheries Management 29:850-85.
 #' 
 #' @keywords datasets
 #' 

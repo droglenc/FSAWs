@@ -3,7 +3,7 @@
 \docType{data}
 \name{WalleyeGerowLW}
 \alias{WalleyeGerowLW}
-\title{Raw length-weight data that can be used to compute the Ws for walleye as performed in Gerow (2005).}
+\title{Raw length-weight data that can be used to compute the Ws for Walleye as performed in Gerow (2005).}
 \format{
 A data frame with 34734 observations on the following 3 variables:
  \describe{
@@ -16,7 +16,7 @@ A data frame with 34734 observations on the following 3 variables:
 Directly from Ken Gerow. Summarized in Gerow, K.G., R.C. Anderson-Sprecher, and W.A. Hubert. 2005. A new method to compute standard-weight equations that reduces length-related bias. North American Journal of Fisheries Management 25:1288-1300.
 }
 \description{
-Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for walleye (\emph{Sander vitreus vitreus}).
+Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Walleye (\emph{Sander vitreus vitreus}).
 }
 \examples{
 data(WalleyeGerowLW)

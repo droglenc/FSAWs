@@ -18,14 +18,14 @@ A data frame with 114 observations on the following 8 variables:
  }
 }
 \source{
-From Table 3 in Murphy, B.R., M.L. Brown, and T.A. Springer.  1990.  Evaluation of the relative weight (Wr) index, with new applications to
-walleye.  North American Journal of Fisheries Management, 10:85-97.
+From Table 3 in Murphy, B.R., M.L. Brown, and T.A. Springer. 1990. Evaluation of the relative weight (Wr) index, with new applications to
+walleye. North American Journal of Fisheries Management, 10:85-97.
 }
 \description{
 Length-weight regression results from a variety of populations used for computing the standard weight (Ws) equation for Walleye (\emph{Sander vitreus}).
 }
 \details{
-Each row contains the intercept (\code{log.a}) and slope (\code{b}) results from fitting the \eqn{log_{10}(W) = log_{10}(a) + b log_{10}(L)} linear regression model to a population of \code{n} fish from the given location and state.  Note that \eqn{W} is weight in grams and \eqn{L} is length in mm.
+Each row contains the intercept (\code{log.a}) and slope (\code{b}) results from fitting the \eqn{log_{10}(W) = log_{10}(a) + b log_{10}(L)} linear regression model to a population of \code{n} fish from the given location and state. Note that \eqn{W} is weight in grams and \eqn{L} is length in mm.
 }
 \examples{
 data(WalleyeWs)
