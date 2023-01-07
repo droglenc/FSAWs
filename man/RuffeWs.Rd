@@ -29,7 +29,6 @@ From Ogle, D.H. and I.J. Winfield. 2009. Ruffe length-weight relationships with 
 Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Ruffe (\emph{Gymnocephalus cernuus}). Data are from Ogle and Winfield (2009).
 }
 \examples{
-data(RuffeWs)
 ## Create log10 TL and Wt
 RuffeWs$logtl <- log10(RuffeWs$tl)
 RuffeWs$logwt <- log10(RuffeWs$wt)

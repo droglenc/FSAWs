@@ -147,17 +147,18 @@ Gerow \emph{et al.} (2005) suggested using a quantile definition that is basical
 #   linear term, and quadratic term for 75th percentile Ws equation
 # and -- -4.950281, 2.698470, and 0.1052352 for the intercept,
 #   linear term, and quadratic term for 50th percentile Ws equation
-data(WalleyeGerowLW)
-# compare to Ws75 results
+
+# Ws75 results
 wae1 <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,cutoff.tail=FALSE)
 coef(wae1)
-# compare to Ws75 results -- using same quantile type?
+# Ws75 results -- using same quantile type?
 wae2 <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,qtype=9,cutoff.tail=FALSE)
 coef(wae2)
-# compare to Ws50 results; note use of all length categories
+
+# Ws50 results; note use of all length categories
 wae1a <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,n.cutoff=1,probs=0.5)
 coef(wae1a)
-# compare to Ws50 results -- using same quantile type?
+# Ws50 results -- using same quantile type?
 wae2a <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,qtype=9,n.cutoff=1,probs=0.5)
 coef(wae2a)
 

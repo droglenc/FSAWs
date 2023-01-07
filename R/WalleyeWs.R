@@ -28,7 +28,6 @@
 #' @keywords datasets
 #' 
 #' @examples
-#' data(WalleyeWs)
 #' str(WalleyeWs)
 #' head(WalleyeWs)
 #' 

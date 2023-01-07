@@ -24,7 +24,6 @@ Length-weight regression results from a variety of populations used for computin
 Each row contains the intercept (\code{log.a}) and slope (\code{b}) results from fitting the \eqn{log_{10}(W) = log_{10}(a) + b log_{10}(L)} linear regression model to a population of \code{n} fish from the given location and state. Note that \eqn{W} is weight in grams and \eqn{L} is length in mm.
 }
 \examples{
-data(BluegillWs)
 str(BluegillWs)
 head(BluegillWs)
 

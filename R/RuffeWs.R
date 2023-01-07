@@ -30,7 +30,6 @@
 #' @keywords datasets
 #' 
 #' @examples
-#' data(RuffeWs)
 #' ## Create log10 TL and Wt
 #' RuffeWs$logtl <- log10(RuffeWs$tl)
 #' RuffeWs$logwt <- log10(RuffeWs$wt)

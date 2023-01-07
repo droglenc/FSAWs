@@ -24,7 +24,6 @@
 #' @keywords datasets
 #' 
 #' @examples
-#' data(BluegillWs)
 #' str(BluegillWs)
 #' head(BluegillWs)
 #' 

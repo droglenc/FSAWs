@@ -41,7 +41,7 @@ rlp(log.a, b, min, max, w = 10, qtype = 8, probs = 0.75, digits = NULL)
   lwd.Ws = 3,
   lty.Ws = 1,
   xlab = "log10(midpt Length)",
-  ylab = paste("log10(", 100 * object$prob, " Percentile of Predicted Weight)", sep = ""),
+  ylab = paste0("log10(", 100 * object$prob, " Percentile of Predicted Weight)"),
   main = "RLP Equation Fit",
   ...
 )
@@ -122,7 +122,6 @@ The \code{what} argument in the \code{plot} method can be set to \code{"both"}, 
 \examples{
 ## Recreate Murphy et al. (1990) results for Largemouth Bass
 # min and max lengths were 152 and 816
-data(LMBassWs)
 lmb.rlp <- rlp(LMBassWs$log.a,LMBassWs$b,155,815,qtype=6)
 coef(lmb.rlp)
 # compare to log.a=-5.379 and b=3.221

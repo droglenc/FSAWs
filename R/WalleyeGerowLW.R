@@ -20,9 +20,9 @@
 #' @keywords datasets
 #'
 #' @examples
-#' data(WalleyeGerowLW)
 #' str(WalleyeGerowLW)
 #' head(WalleyeGerowLW)
+#' 
 #' ## two of many examples
 #' op <- par(mfrow=c(1,2),pch=19)
 #' plot(wt~len,data=WalleyeGerowLW,subset=popn==1,main="Population #1")

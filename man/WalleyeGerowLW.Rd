@@ -19,9 +19,9 @@ Directly from Ken Gerow. Summarized in Gerow, K.G., R.C. Anderson-Sprecher, and 
 Raw length-weight data from a variety of populations used for computing the standard weight (Ws) equation for Walleye (\emph{Sander vitreus vitreus}).
 }
 \examples{
-data(WalleyeGerowLW)
 str(WalleyeGerowLW)
 head(WalleyeGerowLW)
+
 ## two of many examples
 op <- par(mfrow=c(1,2),pch=19)
 plot(wt~len,data=WalleyeGerowLW,subset=popn==1,main="Population #1")

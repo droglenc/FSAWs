@@ -66,17 +66,18 @@
 #' #   linear term, and quadratic term for 75th percentile Ws equation
 #' # and -- -4.950281, 2.698470, and 0.1052352 for the intercept,
 #' #   linear term, and quadratic term for 50th percentile Ws equation
-#' data(WalleyeGerowLW)
-#' # compare to Ws75 results
+#' 
+#' # Ws75 results
 #' wae1 <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,cutoff.tail=FALSE)
 #' coef(wae1)
-#' # compare to Ws75 results -- using same quantile type?
+#' # Ws75 results -- using same quantile type?
 #' wae2 <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,qtype=9,cutoff.tail=FALSE)
 #' coef(wae2)
-#' # compare to Ws50 results; note use of all length categories
+#' 
+#' # Ws50 results; note use of all length categories
 #' wae1a <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,n.cutoff=1,probs=0.5)
 #' coef(wae1a)
-#' # compare to Ws50 results -- using same quantile type?
+#' # Ws50 results -- using same quantile type?
 #' wae2a <- emp(WalleyeGerowLW,"popn","len","wt",min=155,max=955,qtype=9,n.cutoff=1,probs=0.5)
 #' coef(wae2a)
 #' 
@@ -211,10 +212,12 @@ plot.emp <- function(x,pch=16,col.pop="rainbow",
 
 #' @rdname emp
 #' @export
-fitPlot.emp <- function(object,pch=16,col.pt="black",col.Ws="red",lwd.Ws=3,lty.Ws=1,
-                 xlab="log10(midpt Length)",
-                 ylab=paste(100*object$probs,"Percentile of mean log10(Weight)"),
-                 main="EMP Equation Fit",...) {
+fitPlot.emp <- function(object,
+                        pch=16,col.pt="black",col.Ws="red",lwd.Ws=3,lty.Ws=1,
+                        xlab="log10(midpt Length)",
+                        ylab=paste(100*object$probs,
+                                   "Percentile of mean log10(Weight)"),
+                        main="EMP Equation Fit",...) {
   if ("emprq" %in% class(object))
     stop("fitPlot() not implement with quantile regressions.",call.=FALSE) 
   graphics::plot(object$regdata$logwq~object$regdata$logmidpt,
