@@ -57,7 +57,7 @@ rlp(log.a, b, min, max, w = 10, qtype = 8, probs = 0.75, digits = NULL)
 
 \item{w}{A number that indicates the widths for which to create length categories.}
 
-\item{qtype}{Type of quantile method to use. See details.}
+\item{qtype}{Type of quantile method to use. See description of types of quantile calculation methods in \code{\link{quantile}}.}
 
 \item{probs}{A number that indicates the probability of the quantile. Must be between 0 and 1.}
 
@@ -111,9 +111,9 @@ The main function follows the steps of the regression-line-percentile (RLP) meth
 
 Note that \eqn{log_{10}(a)} and \eqn{b} must be from the regression of \eqn{log_{10}(W)} on \eqn{log_{10}(L)} where \eqn{W} is measured in grams and \eqn{L} is the length (traditionally total length) measured in mm.
 
-It appears that Murphy \emph{et al.} (1990) used \code{qtype=6} in their SAS program. Types of quantile calculation methods are discussed in \code{\link{quantile}}.
+It appears that Murphy \emph{et al.} (1990) used \code{qtype=6} in their SAS program.
 
-The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}. The \code{"raw"} plot shows lines on the length-weight scale for each population with the resultant standard weight equation superimposed in red. The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale. The \code{"both"} option produces both plots side-by-side. If the \code{col.pop} argument is set equal to one of the palettes in \code{paletteChoices} and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
+The \code{what} argument in the \code{plot} method can be set to \code{"both"}, \code{"log"}, or \code{"raw"}. The \code{"raw"} plot shows lines on the length-weight scale for each population with the resultant standard weight equation superimposed in red. The \code{"log"} plot constructs a similar plot but on the \eqn{log_{10}(weight)}-\eqn{log_{10}(length)} scale. The \code{"both"} option produces both plots side-by-side. If the \code{col.pop} argument is one of \code{"rainbow"}, \code{"heat"}, \code{"topo"}, \code{"terrain"}, \code{"cm"}, \code{"default"}, or \code{"grey"} and \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 
 \code{fitPlot} shows the log-transformed linear regression result; i.e., fitted line superimposed on the log-transformed \code{prob}the percentile predicted weights versus log-transformed midpoint length category value. The examples show how to make a corresponding residual plot.
  

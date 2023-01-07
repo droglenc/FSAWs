@@ -81,7 +81,7 @@ emp(
 
 \item{cutoff.tail}{A logical that indicates if all length categories larger than the lowest length category with a number of populations below \code{n.cutoff} should be excluded \code{=TRUE} or just those length categories with sample sizes lower than \code{n.cutoff}.}
 
-\item{qtype}{Type of quantile method to use. See details.}
+\item{qtype}{Type of quantile method to use. See description of types of quantile calculation methods in \code{\link{quantile}}.}
 
 \item{probs}{A number that indicates the probability of the quantile. Must be between 0 and 1.}
 
@@ -131,13 +131,13 @@ The main function returns a list with the following items:
 Computes the standard weight equation using the empirical-percentile (EmP) method when given populations of length-weight data.
 }
 \details{
-The main function follows the steps of the empirical percentile method (EmP) detailed in Gerow \emph{et al.} (2005). In general, the mean \eqn{log_{10}} weight for each population within all length categories is computed, length categories from fewer than \code{ncutoff} populations are eliminated (see \code{cutoff.tail} description above), the 100\code{prob}th quantile of mean \eqn{log_{10}} weights for the remaining categories are found, and a \eqn{n}-weighted regression (quadratic regression if \code{quadratic=TRUE}) is then fit to the 100\code{prob}th quantile of mean \eqn{log_{10}} weights and the length category midpoint value.
+The main function follows the steps of the empirical percentile method (EmP) detailed in Gerow \emph{et al.} (2005). In general, the mean \eqn{log_{10}} weight for each population within all length categories is computed, length categories from fewer than \code{ncutoff} populations are eliminated (see \code{cutoff.tail} description above), the 100\code{prob}th quantile of mean \eqn{log_{10}} weights for the remaining categories are found, and a \eqn{n}-weighted regression (quadratic regression if \code{quadratic=TRUE}) is then fit to the 100\code{probs}th quantile of mean \eqn{log_{10}} weights and the length category midpoint value.
 
-Gerow \emph{et al.} (2005) suggested using a quantile definition that is basically the same as \code{qtype=9}. Types of quantile calculation methods are discussed in the details of \code{\link{quantile}}.
+Gerow \emph{et al.} (2005) suggested using a quantile definition that is basically the same as \code{qtype=9}.
 
 \code{coef} returns \eqn{log_{10}(a)} and \eqn{b} values for the resultant standard weight equation. Similarly, \code{summary}, \code{anova}, and \code{predict} returns the typical results for the linear regression model used to create the standard weight equation.
 
-\code{plot} method plots the mean log10 weights versus length category midpoint for each population represented in the data frame with the resultant standard weight equation superimposed in black. If the \code{col.pop} argument is set equal to one of the palettes in \code{paletteChoices} and the \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
+\code{plot} method plots the mean log10 weights versus length category midpoint for each population represented in the data frame with the resultant standard weight equation superimposed in black. If the \code{col.pop} argument is is one of \code{"rainbow"}, \code{"heat"}, \code{"topo"}, \code{"terrain"}, \code{"cm"}, \code{"default"}, or \code{"grey"} and \code{order.pop=TRUE} then the populations plotted should form a general color gradient from smallest to largest weight in the initial length category. This will make it easier to identify populations that \dQuote{cross over} other populations.
 
 \code{fitPlot} shows the log-transformed linear regression result; i.e., fitted line superimposed on the log-transformed 100\code{prob}th percentile predicted weights versus log-transformed midpoint length category value. The examples show how to make a corresponding residual plot.
 }

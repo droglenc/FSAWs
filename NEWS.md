@@ -5,9 +5,10 @@
 * Added tests for `rlp()`, `emp()`, and `wsValidate()`.
 
 * `.onAttach()`: Streamlined output.
+* `chooseColors()`: Moved to an internal function.
 * `emp()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
 * `lencatOLD()`: Removed internal function, replaced with `FSA::lencat()`. This required changes to `emp()` and `wsValidate()` (*tests held after changes*).
-* `palletteChoices()`: Removed `rich` as an option so that `gplots` could be removed from IMPORTS.
+* `palletteChoices()`: Moved to an internal function. Removed `rich` as an option so that `gplots` could be removed from IMPORTS.
 * `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
 
 # FSAWS 0.0.2 6-Jan-2023 

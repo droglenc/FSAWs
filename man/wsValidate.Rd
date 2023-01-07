@@ -8,7 +8,6 @@
 \alias{coef.empq}
 \alias{summary.empq}
 \alias{predict.empq}
-\alias{plot.empq}
 \alias{fitPlot.empq}
 \title{Methods to assess length-bias in a proposed standard weight equation.}
 \usage{
@@ -36,22 +35,13 @@ wsValidate(
 
 \method{summary}{willis}(object, ...)
 
+\method{coef}{empq}(object, ...)
+
 \method{summary}{empq}(object, ...)
 
 \method{anova}{empq}(object, ...)
 
-\method{coef}{empq}(object, ...)
-
 \method{predict}{empq}(object, ...)
-
-\method{plot}{empq}(
-  x,
-  pch = 16,
-  col.pt = "black",
-  xlab = "Midpoint Length Category",
-  ylab = paste("Standardized", 100 * x$probs, "Percentile Mean Weight"),
-  ...
-)
 
 \method{fitPlot}{empq}(
   object,
@@ -67,7 +57,7 @@ wsValidate(
 )
 }
 \arguments{
-\item{object}{An object of class \code{RLP} or \code{EMP} returned from calling \code{rlp()} or \code{emp()} in the main function and an object of class class \code{empq} or \code{willis} (saved from the \code{wsValidate}) in the generic functions.}
+\item{object}{An object of class \code{RLP} or \code{EMP} returned from calling \code{rlp} or \code{emp} in the main function and an object of class class \code{empq} or \code{willis} (saved from the \code{wsValidate}) in the generic functions.}
 
 \item{df}{A data frame that contains the length-weight data for each population.}
 
@@ -89,7 +79,7 @@ wsValidate(
 
 \item{cutoff.tail}{A logical that indicates if all length categories larger than the lowest length category with a number of populations below \code{n.cutoff} should be excluded \code{=TRUE} or just those length categories with sample sizes lower than \code{n.cutoff}. Ignored if \code{type="Willis"}.}
 
-\item{qtype}{Type of quantile method to use. See details. Ignored if \code{use.means=TRUE}.}
+\item{qtype}{Type of quantile method to use. See description of types of quantile calculation methods in \code{\link{quantile}}. Ignored if \code{use.means=TRUE}.}
 
 \item{probs}{A number that indicates the probability of the quantile. Must be between 0 and 1. Ignored if \code{use.means=TRUE}.}
 
@@ -105,13 +95,9 @@ wsValidate(
 
 \item{\dots}{Additional arguments for methods.}
 
-\item{pch}{A single numeric that indicates what plotting character codes should be used for the points in plot or fitPlot.}
+\item{pch}{A single numeric that indicates what plotting character codes should be used for the points in \code{plot} or \code{fitPlot}.}
 
 \item{col.pt}{A string used to indicate the color of the plotted points.}
-
-\item{xlab}{A label for the x-axis of plot or fitPlot.}
-
-\item{ylab}{A label for the y-axis of plot or fitPlot.}
 
 \item{col.mdl}{A string that indicates the type of color to use for the standard length-weight regression line.}
 
@@ -119,34 +105,41 @@ wsValidate(
 
 \item{lty.mdl}{A numeric that indicates the type of line to use for the standard length-weight regression line.}
 
-\item{main}{A label for the main title of fitPlot.}
+\item{xlab}{A label for the x-axis of plot or \code{fitPlot}.}
+
+\item{ylab}{A label for the y-axis of plot or \code{fitPlot}.}
+
+\item{main}{A label for the main title of \code{fitPlot}.}
 }
 \value{
-If \code{type="Willis"} then a list is returned with the following three items.
+If \code{type="Willis"} then a list is returned with the following items.
   \itemize{
-  \item \code{res.ind} is a data frame that contains the results of the individual regressions.
-  \item \code{res.tbl}) is the table summarizing the number of positive and negative significant slopes.
-  \item \code{res.test}) contains the results for the chi-square test.
+  \item \code{res.ind} is a data.frame with the results of the individual regressions.
+  \item \code{res.tbl} is a table summarizing the number of positive and negative significant slopes.
+  \item \code{res.test} contains the results for the exact binomial test.
 }
 
-If \code{type="EmpQ"} then a list is returned with the following five items:
+If \code{type="EmpQ"} then a list is returned with the following items:
 \itemize{
-  \item \code{n.by.pop}) is a table of the number of populations represented in each length category.
-  \item \code{regdata}) is a dataframe used for the EmpQ regression.
-  \item \code{quadratic}) is a logical that indicates whether the quadratic regression was used.
-  \item \code{weighted}) is a logical that indicates whether a weighted regression was used.
+  \item \code{n.by.pop} is a table of the number of populations represented in each length category.
   \item \code{lm.v} is the EmpQ regression model results.
+  \item \code{regdata} is a data.frame used for the EmpQ regression.
+  \item \code{quadratic} is a logical that indicates whether the quadratic regression was used.
+  \item \code{weighted} is a logical that indicates whether a weighted regression was used.
+  \item \code{probs} the numeric given in \code{probs}.
 }
 }
 \description{
 The Willis and empirical quantiles (EmpQ) methods to assess length-bias in a proposed standard weight equation.
 }
 \details{
-The main function can be used to assess length-bias in a proposed standard weight equation using either the method of Willis et al. (1991) (i.e., \code{type="Willis"}) or the empricial quantiles method of Gerow et al. (2004) (i.e., \code{type="EmpQ"}). The Willis method begins by regressing the relative weight computed from the candidate standard weight equation (supplied in \code{object}) for each individual in a population in the \code{df} data frame against length. This is repeated for each population in \code{df}. The number of positive and negative slopes from this regression that are statistically significant are counted and a chi-square test is used to determine if there is a statistically equal number of each. If there is a statistically equal number of positive and negative significant slopes then the standard weight equation is said not to exhibit a length bias.
+The main function can be used to assess length-bias in a proposed standard weight equation using either the method of Willis \emph{et al.} (1991) (i.e., \code{type="Willis"}) or the empirical quantiles (EmpQ) method of Gerow \emph{et al.} (2004) (i.e., \code{type="EmpQ"}). The Willis method begins by regressing the relative weight computed from the candidate standard weight equation (supplied in \code{object}) for each individual in a population in the \code{df} data frame against length. This is repeated for each population in \code{df}. The number of positive and negative slopes from this regression that are statistically significant are counted and an exact binomial test is used to determine if there is a statistically equal number of each. If there is a statistically equal number of positive and negative significant slopes then the standard weight equation is said not to exhibit a length bias.
 
-The EmpQ method is performed by (1) computing the mean actual weight per \code{w}-mm length category for each population, (2) computing the given quartile (default is third) of mean actual weight per length category across all populations, (3) standardizing the quartile mean weights by dividing each by the standard weight for the midpoint of the length categories using the proposed standard weight equation, and (4) regressing the standardized quartile mean weights against the length category midpoints. The regression can either be quadratic (i.e., \code{quadratic=TRUE}) as proposed by Gerow et al. (2004) or n-weighted (i.e., \code{weighted=TRUE}). In addition, length categories with fewer than \code{ncutoff} are eliminated (see \code{cutoff.tail} description above). A slope of zero for the relationship between standardized quartile mean weights and length category midpoints indicates that no length-based biases exist with the proposed standard weight equation.
+\code{print}ing the Willis results will show the results for the individual regressions and a table that shows the number of significant negative and positive regression slopes. \code{summary} for the Willis results also shows the number of significant negative and positive regression slopes and the results from the exact binomial tests (using \code{\link{binom.test}} for whether the number of negative and positive slopes is the same or not.
 
-Types of quantile calculation methods are discussed in the details of \code{quantile}.
+The EmpQ method is performed by (1) computing the mean actual weight per \code{w}-mm length category for each population, (2) computing the quantile given in \code{probs} (default is 75th) of mean actual weight per length category across all populations, (3) standardizing the quantile mean weights by dividing each by the standard weight for the midpoint of the length categories using the proposed standard weight equation, and (4) regressing the standardized quantile mean weights against the length category midpoints. The regression can either be quadratic (i.e., \code{quadratic=TRUE}) as proposed by Gerow \emph{et al.} (2004) or n-weighted (i.e., \code{weighted=TRUE}). In addition, length categories with fewer than \code{ncutoff} populations are eliminated (see \code{cutoff.tail} description above). A slope of zero for the relationship between standardized quantile mean weights and length category midpoints indicates that no length-based biases exist with the proposed standard weight equation.
+
+For the EmpQ method, \code{coef}, \code{summary}, \code{anova}, and \code{predict} returns the typical results for the linear regression model used in the method. \code{fitPlot} shows the standardized quantile mean weights versus midpoint length category with the EmpQ method regression line overlaid.
 }
 \examples{
 ## See examples in rlp(), emp(), and FroeseWs()
@@ -158,7 +151,7 @@ Gerow, K.G., W.A. Hubert, R.C. Anderson-Sprecher. 2004. An alternative approach 
 Willis, D.W., C.S. Guy, and B.R. Murphy. 1991. Development and evaluation of the standard weight (Ws) equation for yellow perch. North American Journal of Fisheries Management, 11:374-380.
 }
 \seealso{
-\code{\link{rlp}}, \code{\link{emp}}, and \code{\link{FroeseWs}}; and \code{quantile} in \pkg{stats}
+\code{\link{rlp}} and \code{\link{emp}}.
 }
 \author{
 Derek H. Ogle, \email{DerekOgle51@gmail.com}

@@ -15,6 +15,27 @@
   packageStartupMessage(msg)
 }
 
+# Create a list of colors from among a variety of color palettes.
+chooseColors <- function(pal=paletteChoices(),num,...) {
+  pal <- match.arg(pal)
+  switch(pal,
+         cm={clrs <- grDevices::cm.colors(num,...)},
+         default={clrs <- 1:num},
+         gray=,grey={clrs <- grDevices::grey.colors(num)},
+         heat={clrs <- grDevices::heat.colors(num,...)},
+         rainbow={clrs <- grDevices::rainbow(num,...)},
+         topo={clrs <- grDevices::topo.colors(num,...)},
+         terrain={clrs <- grDevices::terrain.colors(num,...)}
+  )
+  clrs
+}
+
+# Provides a vector of possible color palettes.
+paletteChoices <- function() {
+  c("rainbow","heat","topo","terrain","cm","default","grey","gray")
+}
+
+
 #' @title Fitted model plots.
 #' @description A generic function for constructing a fitted model plot.
 #' @details Specifics described relative to specific object (e.g., see \code{\link{emp}}).
