@@ -41,7 +41,7 @@
 #' rWs.v <- droplevels(subset(RuffeWs,use=="validate"))
 #' str(rWs.v)
 #' 
-#' ## Loop through all regressions
+#' ## Loop through all regressions (for use with rlp())
 #' ### First make a function that performs a regression on one regrnum
 #' ###   and creates a data.frame of desired results
 #' indivreg <- function(d,alpha=0.05) {
