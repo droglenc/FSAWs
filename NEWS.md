@@ -6,7 +6,7 @@
 
 * `.onAttach()`: Streamlined output.
 * `chooseColors()`: Moved to an internal function.
-* `emp()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
+* `emp()`: Need to adjust how categories were cutoff relative to `n.cutoff=` when `cutoff.tal=TRUE` because previous version did not handle cutoffs at low length categories (or cutoffs on both sides). Needed to add `as.numeric()` around `p.n.tbl` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
 * `lencatOLD()`: Removed internal function, replaced with `FSA::lencat()`. This required changes to `emp()` and `wsValidate()` (*tests held after changes*).
 * `palletteChoices()`: Moved to an internal function. Removed `rich` as an option so that `gplots` could be removed from IMPORTS.
 * `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels).

@@ -126,22 +126,35 @@ emp <- function(df,pops,len,wt,min,max,w=10,n.cutoff=3,cutoff.tail=TRUE,qtype=8,
    df1$fLCat <- factor(df1$LCat)
    # add log midpt for quantile regression method 
    df1$logmidpt <- log10(df1$LCat) 
-   # find table of populations in each length category, remove those lower than
-   #   ncutoff considering cutoff.tail
-   # number of population means in each length category
+   # find table of populations in each length category
    p.n.tbl <- table(df1$fLCat)                      
-   # which length categories had n below or equal to n.cutoff
-   p.n.low <- which(p.n.tbl < n.cutoff)             
-   # which length categories had n above n.cutoff
-   p.n.adeq <- which(p.n.tbl >= n.cutoff)           
-   # if cutoff entire tail then find the tail
-   if (cutoff.tail & length(p.n.low)>0) {           
-     p.n.low <- p.n.low[1]:p.n.low[length(p.n.low)]
-     p.n.adeq <- p.n.adeq[1]:(p.n.low[1]-1)
+   # determine which length categories have n less than n.cutoff. Must handle
+   #  differently depending on if cutoff.tail is TRUE or not
+   if (!cutoff.tail) {
+     ## simply find those length categories less than n.cutoff
+     p.n.lows <- which(p.n.tbl < n.cutoff)
+   } else {
+     n.lcats <- length(p.n.tbl)
+     ## find last low in first half and treat all before that as low
+     ##    *  must be careful to deal with when a low does not exist
+     p.n.tbl.first <- p.n.tbl[1:floor(n.lcats/2)]
+     low.first <- which(p.n.tbl.first<n.cutoff)
+     if (length(low.first)>0) {
+       low.first <- 1:max(low.first)
+     } else low.first <- NULL
+     ## find first low in second half and treat all after that as low
+     p.n.tbl.second <- p.n.tbl[ceiling(n.lcats/2):n.lcats]
+     low.second <- which(p.n.tbl.second<n.cutoff)
+     if (length(low.second)>0) {
+       low.second <- (ceiling(n.lcats/2)-1+min(low.second)):n.lcats
+     } else low.second <- NULL
+     ## put together the lows from the first and second half
+     p.n.lows <- c(low.first,low.second)
    }
-   names(p.n.tbl)[which(names(p.n.tbl) %in% names(p.n.tbl)[p.n.low])] <- paste(names(p.n.tbl)[p.n.low],"*",sep="")  # asterisk those not used
+   ## put an asterisk on the category names that had n below n.cutoff
+   names(p.n.tbl)[p.n.lows] <- paste0(names(p.n.tbl)[p.n.lows],"*")
    # make new data frame with length categories deleted
-   df2 <- droplevels(subset(df1,fLCat %in% names(p.n.tbl)[p.n.adeq]))
+   df2 <- droplevels(subset(df1,!fLCat %in% names(p.n.tbl)[p.n.lows]))
 
    # find the given quantile of mean logW in each length category
    logWq <- tapply(df2$mn.logW,df2$fLCat,stats::quantile,probs=probs,type=qtype)
