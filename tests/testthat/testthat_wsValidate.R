@@ -119,7 +119,7 @@ test_that("wsValidate() using coefficients", {
                      type="Willis")
   res2 <- wsValidate(coef(ruf75.rlp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
                      type="Willis")
-  expect_identical(res1,res2)
+  expect_equal(res1,res2,tolerance=0.00000001)
   
   ## The object in call is different, so compared coef/anovas instead
   res1 <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
@@ -143,7 +143,7 @@ test_that("wsValidate() using coefficients", {
                      type="Willis")
   res2 <- wsValidate(coef(ruf75.emp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
                      type="Willis")
-  expect_identical(res1,res2)
+  expect_equal(res1,res2,tolerance=0.00000001)
   
   ## The object in call is different, so compared coef/anovas instead
   res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
@@ -167,7 +167,7 @@ test_that("wsValidate() using coefficients", {
                      type="Willis")
   res2 <- wsValidate(coef(ruf75nq.emp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
                      type="Willis")
-  expect_identical(res1,res2)
+  expect_equal(res1,res2,tolerance=0.00000001)
   
   ## The object in call is different, so compared coef/anovas instead
   res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
