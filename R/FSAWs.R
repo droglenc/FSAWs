@@ -19,6 +19,5 @@
 #' 
 #' Giannetto D, PeDiCillo G. 2011. Proposed standard weight (Ws) equations for \emph{Telestes muticellus} (Bonaparte, 1837) in the Tiber River basin. Cybium 35:141-147. 
 #' 
-#' @docType package
 #' @name FSAWs
 NULL

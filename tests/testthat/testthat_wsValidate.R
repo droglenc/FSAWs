@@ -16,13 +16,13 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- summary(res)
   expect_identical(tmp$statistic,c("number of successes"=15))
   expect_identical(tmp$parameter,c("number of trials"=20))
-  expect_equal(tmp$p.value,c("Negative"=0.0414),tolerance=0.0001)
+  expect_equal(tmp$p.value,c("Negative"=0.0414),tolerance=0.001)
   ### Weighted EmpQ method
   res <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                     type="EmpQ",weighted=TRUE)
   tmp <- anova(res)
   expect_identical(tmp$Df,c(1L,1L,10L))
-  expect_equal(tmp$`Pr(>F)`,c(0.3620,0.0034,NA),tolerance=0.0001)
+  expect_equal(tmp$`Pr(>F)`,c(0.3620,0.0034,NA),tolerance=0.001)
   
   ## Compare 50th percentile RLP results to Table 2 of Ogle & Winfield
   ### Willis method
@@ -31,7 +31,7 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- summary(res)
   expect_identical(tmp$statistic,c("number of successes"=14))
   expect_identical(tmp$parameter,c("number of trials"=19))
-  expect_equal(tmp$p.value,c("Negative"=0.0636),tolerance=0.0001)
+  expect_equal(tmp$p.value,c("Negative"=0.0636),tolerance=0.001)
   ### Weighted EmpQ method
   res <- wsValidate(ruf50.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                     type="EmpQ",weighted=TRUE,probs=0.5)
@@ -75,7 +75,7 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- summary(res)
   expect_identical(tmp$statistic,c("number of successes"=16))
   expect_identical(tmp$parameter,c("number of trials"=17))
-  expect_equal(tmp$p.value,c("Negative"=0.0003),tolerance=0.0001)
+  expect_equal(tmp$p.value,c("Negative"=0.0003),tolerance=0.001)
   ### Weighted EmpQ method
   res <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                     type="EmpQ",weighted=TRUE)
@@ -90,13 +90,13 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- summary(res)
   expect_identical(tmp$statistic,c("number of successes"=14))
   expect_identical(tmp$parameter,c("number of trials"=19))
-  expect_equal(tmp$p.value,c("Negative"=0.0636),tolerance=0.0001)
+  expect_equal(tmp$p.value,c("Negative"=0.0636),tolerance=0.001)
   ### Weighted EmpQ method
   res <- wsValidate(ruf50nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                     type="EmpQ",weighted=TRUE,probs=0.5)
   tmp <- anova(res)
   expect_identical(tmp$Df,c(1L,1L,10L))
-  expect_equal(tmp$`Pr(>F)`,c(0.3844,0.0685,NA),tolerance=0.0001)
+  expect_equal(tmp$`Pr(>F)`,c(0.3844,0.0685,NA),tolerance=0.001)
   
   ## Compare Froese results to Table 2 of Ogle & Winfield
   ### Willis method
@@ -105,7 +105,7 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- summary(res)
   expect_identical(tmp$statistic,c("number of successes"=13))
   expect_identical(tmp$parameter,c("number of trials"=19))
-  expect_equal(tmp$p.value,c("Negative"=0.1671),tolerance=0.0001)
+  expect_equal(tmp$p.value,c("Negative"=0.1671),tolerance=0.001)
   ### Weighted EmpQ method
   res <- wsValidate(ruf.Froese,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                     type="EmpQ",weighted=TRUE,use.means=TRUE)

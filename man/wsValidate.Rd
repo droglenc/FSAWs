@@ -142,7 +142,7 @@ The EmpQ method is performed by (1) computing the mean actual weight per \code{w
 For the EmpQ method, \code{coef}, \code{summary}, \code{anova}, and \code{predict} returns the typical results for the linear regression model used in the method. \code{fitPlot} shows the standardized quantile mean weights versus midpoint length category with the EmpQ method regression line overlaid.
 }
 \examples{
-## See examples in rlp(), emp(), and FroeseWs()
+## See examples for RuffeWs()
 
 }
 \references{

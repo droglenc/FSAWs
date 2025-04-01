@@ -1,3 +1,5 @@
+data(RuffeWs,package="FSAWs")
+
 ## Create log10 TL and Wt
 RuffeWs$logtl <- log10(RuffeWs$tl)
 RuffeWs$logwt <- log10(RuffeWs$wt)
@@ -36,14 +38,14 @@ head(reg.d)
 ruf75.rlp <- rlp(reg.d$loga,reg.d$b,min=60,max=210,w=10)
 ruf50.rlp <- rlp(reg.d$loga,reg.d$b,min=60,max=210,w=10,probs=0.5)
 
-ruf75.emp <- emp(rWs.d,pop="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
+ruf75.emp <- emp(rWs.d,pops="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
                  n.cutoff=4,cutoff.tail=TRUE)
-ruf50.emp <- emp(rWs.d,pop="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
+ruf50.emp <- emp(rWs.d,pops="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
                  n.cutoff=4,cutoff.tail=TRUE,probs=0.5)
 
-ruf75nq.emp <- emp(rWs.d,pop="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
+ruf75nq.emp <- emp(rWs.d,pops="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
                    n.cutoff=4,cutoff.tail=TRUE,quadratic=FALSE)
-ruf50nq.emp <- emp(rWs.d,pop="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
+ruf50nq.emp <- emp(rWs.d,pops="regrnum",len="tl",wt="wt",min=60,max=220,w=10,
                    n.cutoff=4,cutoff.tail=TRUE,probs=0.5,quadratic=FALSE)
 
 ruf.Froese <- FroeseWs(reg.d$loga,reg.d$b)

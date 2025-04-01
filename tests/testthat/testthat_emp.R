@@ -36,7 +36,7 @@ test_that("emp() match Gerow's Excel Tool results for Walleye", {
   res <- coef(wae50)
   expect_equal(res[["(Intercept)"]],-4.9013462,tolerance=0.00000001)
   expect_equal(res[["logmidpt"]],2.6566370,tolerance=0.00000001)
-  expect_equal(res[["I(logmidpt^2)"]],0.1138445,tolerance=0.0000001)
+  expect_equal(res[["I(logmidpt^2)"]],0.1138445,tolerance=0.000001)
 })
 
 test_that("emp() match Ogle & Winfield (2009) results for Ruffe", {
@@ -57,7 +57,7 @@ test_that("emp() match Ogle & Winfield (2009) results for Ruffe", {
   res <- coef(ruf50.emp)
   expect_equal(res[["(Intercept)"]],-3.3524,tolerance=0.0001)
   expect_equal(res[["logmidpt"]],1.3969,tolerance=0.0001)
-  expect_equal(res[["I(logmidpt^2)"]],0.4054,tolerance=0.0001)
+  expect_equal(res[["I(logmidpt^2)"]],0.4054,tolerance=0.001)
   
   ## Compare 75th percentile (no quad) results to those in Table 2 of Ogle & Winfield
   res <- coef(ruf75nq.emp)

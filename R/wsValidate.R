@@ -68,7 +68,7 @@
 #' @keywords manip
 #' 
 #' @examples
-#' ## See examples in rlp(), emp(), and FroeseWs()
+#' ## See examples for RuffeWs()
 #' 
 #' @rdname wsValidate
 #' @export

@@ -1,9 +1,12 @@
 Package: FSAWs
 Version: 0.0.2
+Date: 2025-4-1
 Title: Construct and Validate Standard Weight (Ws) Equations for Fish
 Description: Construct and validate standard weight (Ws) equations for fish.
 Authors@R: person("Derek", "Ogle", email="DerekOgle51@gmail.com",
                   role=c("aut","cre"))
+URL: https://github.com/droglenc/FSAWs
+License: GPL (>= 2)
 LazyData: true
 Depends:
     R (>= 3.0.0)
@@ -15,7 +18,6 @@ Imports:
     quantreg
 Suggests:
     testthat
-License: GPL (>= 2)
-URL: https://github.com/droglenc/FSAWs
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
