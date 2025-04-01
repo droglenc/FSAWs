@@ -9,9 +9,9 @@
 * `emp()`: Need to adjust how categories were cutoff relative to `n.cutoff=` when `cutoff.tal=TRUE` because previous version did not handle cutoffs at low length categories (or cutoffs on both sides). Needed to add `as.numeric()` around `p.n.tbl` when making the regression data.frame so that it contained only the sample sizes (and not the labels).
 * `lencatOLD()`: Removed internal function, replaced with `FSA::lencat()`. This required changes to `emp()` and `wsValidate()` (*tests held after changes*).
 * `palletteChoices()`: Moved to an internal function. Removed `rich` as an option so that `gplots` could be removed from IMPORTS.
-* `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels). Also, added the ability to send Ws equation coefficients to `object` which will allow using the function with pre-existing Ws equations (thanks to N Voss for the question).
+* `wsValidate()`: Needed to add `as.numeric()` around `p.table.n` when making the regression data.frame so that it contained only the sample sizes (and not the labels). Also, added the ability to send Ws equation coefficients to `object` which will allow using the function with pre-existing Ws equations (thanks to N Voss for the question). (*tests held after changes*)
 
-# FSAWS 0.0.2 6-Jan-2023 
+# FSAWs 0.0.2 6-Jan-2023 
 * DESCRIPTION file: Added `LazyData: true` and `Encoding: UTF-8` to, fixed title and author fields.
 # Removed `FSA` (not needed when package moved) and `gdata` (replaced all `drop.levels()` with `droplevels()`) from "Imports"
 * Handled issues with "@S3Method" in `emp()`, `FroeseWs`, `rlp()`, `wsValidate()`.
