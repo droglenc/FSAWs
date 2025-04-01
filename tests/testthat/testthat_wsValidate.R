@@ -1,3 +1,4 @@
+source_test_helpers()
 
 ## Test Messages
 
@@ -7,8 +8,6 @@
 
 ## Validate Results
 test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
-  source_test_helpers()
-
   ## Compare 75th percentile RLP results to Table 2 of Ogle & Winfield
   ### Willis method
   res <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
@@ -112,4 +111,78 @@ test_that("wsValidate() match Ogle & Winfield (2009) results for Ruffe", {
   tmp <- anova(res)
   expect_identical(tmp$Df,c(1L,1L,10L))
   expect_equal(tmp$`Pr(>F)`,c(0.4151,0.0011,NA),tolerance=0.0001)
+})
+
+test_that("wsValidate() using coefficients", {
+  #===== RLP method
+  res1 <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  res2 <- wsValidate(coef(ruf75.rlp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  expect_identical(res1,res2)
+  
+  ## The object in call is different, so compared coef/anovas instead
+  res1 <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(coef(ruf75.rlp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  expect_identical(coef(res1),coef(res2))
+  expect_identical(anova(res1),anova(res2))
+  
+  
+  ## Same as above, but entered coefficients rather than using coef()
+  res1 <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(c(-4.958844,3.028595),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  expect_equal(coef(res1),coef(res2),tolerance=0.00001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.0001)
+
+  #===== EMP method (with quadratic regression)
+  res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  res2 <- wsValidate(coef(ruf75.emp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  expect_identical(res1,res2)
+  
+  ## The object in call is different, so compared coef/anovas instead
+  res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(coef(ruf75.emp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  expect_identical(coef(res1),coef(res2))
+  expect_identical(anova(res1),anova(res2))
+  
+  
+  ## Same as above, but entered coefficients rather than using coef()
+  res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(c(-2.5799710,0.6210216,0.6073453),rWs.v,"regrnum","tl","wt",
+                     min=60,max=220,w=10,type="EmpQ",weighted=TRUE)
+  expect_equal(coef(res1),coef(res2),tolerance=0.0001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.1)
+  
+  #===== EMP method (withOUT quadratic regression)
+  res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  res2 <- wsValidate(coef(ruf75nq.emp),rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
+                     type="Willis")
+  expect_identical(res1,res2)
+  
+  ## The object in call is different, so compared coef/anovas instead
+  res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(coef(ruf75nq.emp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  expect_identical(coef(res1),coef(res2))
+  expect_identical(anova(res1),anova(res2))
+  
+  
+  ## Same as above, but entered coefficients rather than using coef()
+  res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
+                     type="EmpQ",weighted=TRUE)
+  res2 <- wsValidate(c(-5.020624,3.061168),rWs.v,"regrnum","tl","wt",
+                     min=60,max=220,w=10,type="EmpQ",weighted=TRUE)
+  expect_equal(coef(res1),coef(res2),tolerance=0.000001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.00001)
 })

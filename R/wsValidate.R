@@ -2,7 +2,7 @@
 #' 
 #' @description The Willis and empirical quantiles (EmpQ) methods to assess length-bias in a proposed standard weight equation.
 #' 
-#' @param object An object of class \code{RLP} or \code{EMP} returned from calling \code{rlp} or \code{emp} in the main function and an object of class class \code{empq} or \code{willis} (saved from the \code{wsValidate}) in the generic functions.
+#' @param object In the main function, an object of class \code{RLP} or \code{EMP} returned from \code{\link{rlp}} or \code{\link{emp}} or a numeric vector with the Ws equation coefficients. In the generic functions an object of class \code{empq} or \code{willis} (saved from the \code{wsValidate}).
 #' @param df A data frame that contains the length-weight data for each population.
 #' @param pops A string or numeric that indicates which column in \code{df} contains the variable that identifies the different populations.
 #' @param len A string or numeric that indicates which column in \code{df} contains the variable with the length data.
@@ -77,12 +77,20 @@ wsValidate <- function(object,df,pops,len,wt,min,max,w=10,type=c("EmpQ","Willis"
                        use.means=FALSE,quadratic=TRUE,weighted=FALSE,alpha=0.05) {
   ## Internal functions
   compute.Ws <- function(object,vals) {
-    if (!("FroeseWs" %in% class(object))) {
+    tmp <- class(object)
+    if ("numeric" %in% tmp) {  ## Sent coefficients
+      if (length(object)==2) object <- c(object,0)
+      vals <- log10(vals)
+      Ws <- 10^(object[1]+object[2]*vals+object[3]*vals^2)
+    } else if (!("FroeseWs" %in% tmp)) { ## Not Froese, so rlp or emp object
       ndf <- data.frame(log10(vals))
       names(ndf) <- names(object$Ws$model)[2]
       Ws <- 10^(stats::predict(object,ndf))
-    } else Ws <- object$gm.a*vals^object$mn.b
-    Ws  
+    } else { ## Froese object
+      Ws <- object$gm.a*vals^object$mn.b
+    }
+    # Return result
+    Ws
   }
   
   EmpQ <- function(object,df,pops,len,wt,min,w,n.cutoff,cutoff.tail,

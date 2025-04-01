@@ -57,7 +57,7 @@ wsValidate(
 )
 }
 \arguments{
-\item{object}{An object of class \code{RLP} or \code{EMP} returned from calling \code{rlp} or \code{emp} in the main function and an object of class class \code{empq} or \code{willis} (saved from the \code{wsValidate}) in the generic functions.}
+\item{object}{In the main function, an object of class \code{RLP} or \code{EMP} returned from \code{\link{rlp}} or \code{\link{emp}} or a numeric vector with the Ws equation coefficients. In the generic functions an object of class \code{empq} or \code{willis} (saved from the \code{wsValidate}).}
 
 \item{df}{A data frame that contains the length-weight data for each population.}
 
