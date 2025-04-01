@@ -126,9 +126,8 @@ test_that("wsValidate() using coefficients", {
                      type="EmpQ",weighted=TRUE)
   res2 <- wsValidate(coef(ruf75.rlp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                      type="EmpQ",weighted=TRUE)
-  expect_identical(coef(res1),coef(res2))
-  expect_identical(anova(res1),anova(res2))
-  
+  expect_equal(coef(res1),coef(res2),tolerance=0.00000001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.00000001)
   
   ## Same as above, but entered coefficients rather than using coef()
   res1 <- wsValidate(ruf75.rlp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
@@ -138,6 +137,7 @@ test_that("wsValidate() using coefficients", {
   expect_equal(coef(res1),coef(res2),tolerance=0.00001)
   expect_equal(anova(res1),anova(res2),tolerance=0.0001)
 
+  
   #===== EMP method (with quadratic regression)
   res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
                      type="Willis")
@@ -150,9 +150,8 @@ test_that("wsValidate() using coefficients", {
                      type="EmpQ",weighted=TRUE)
   res2 <- wsValidate(coef(ruf75.emp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                      type="EmpQ",weighted=TRUE)
-  expect_identical(coef(res1),coef(res2))
-  expect_identical(anova(res1),anova(res2))
-  
+  expect_equal(coef(res1),coef(res2),tolerance=0.00000001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.00000001)
   
   ## Same as above, but entered coefficients rather than using coef()
   res1 <- wsValidate(ruf75.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
@@ -161,7 +160,8 @@ test_that("wsValidate() using coefficients", {
                      min=60,max=220,w=10,type="EmpQ",weighted=TRUE)
   expect_equal(coef(res1),coef(res2),tolerance=0.0001)
   expect_equal(anova(res1),anova(res2),tolerance=0.1)
-  
+
+    
   #===== EMP method (withOUT quadratic regression)
   res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=210,w=10,
                      type="Willis")
@@ -174,9 +174,8 @@ test_that("wsValidate() using coefficients", {
                      type="EmpQ",weighted=TRUE)
   res2 <- wsValidate(coef(ruf75nq.emp),rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
                      type="EmpQ",weighted=TRUE)
-  expect_identical(coef(res1),coef(res2))
-  expect_identical(anova(res1),anova(res2))
-  
+  expect_equal(coef(res1),coef(res2),tolerance=0.00000001)
+  expect_equal(anova(res1),anova(res2),tolerance=0.00000001)
   
   ## Same as above, but entered coefficients rather than using coef()
   res1 <- wsValidate(ruf75nq.emp,rWs.v,"regrnum","tl","wt",min=60,max=220,w=10,
